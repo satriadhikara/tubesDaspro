@@ -1,6 +1,4 @@
-def run(fungsi):
-    return fungsi()
+def login():
+    return
 
-
-def test():
-    print("yes")
+# def

@@ -29,10 +29,7 @@ def getData(matriks, fileName):
         file = csv.reader(csvfile)
         i = 0
         for lines in file:
-            if i == 0:
-                temp = lines
-            else:
-                matriks[i - 1] = splits((lines)[0], fileName)
+            matriks[i] = splits((lines)[0], fileName)
             i += 1
 
 
@@ -61,8 +58,8 @@ def splits(baris, fileName):
     return barisBaru
 
 # Fungsi akses data yang ada (gaada None-nya)
-# Misal kalau print(user) bakal keluar [['Bondowoso', 'cintaroro', 'bandung_bondowoso'], ['Roro', 'gasukabondo', 'roro_jonggrang']]
-# Kalau print(aksesData(user) [['Bondowoso', 'cintaroro', 'bandung_bondowoso'], ['Roro', 'gasukabondo', 'roro_jonggrang'], None, None, None, None,
+# Misal kalau print(aksesData(user) bakal keluar [['Bondowoso', 'cintaroro', 'bandung_bondowoso'], ['Roro', 'gasukabondo', 'roro_jonggrang']]
+# Kalau print(user) [['Bondowoso', 'cintaroro', 'bandung_bondowoso'], ['Roro', 'gasukabondo', 'roro_jonggrang'], None, None, None, None,
 
 
 def aksesData(matriks):
@@ -84,18 +81,19 @@ def banyakData(matriks):
 parser = argparse.ArgumentParser(description="List fish in aquarium.")
 parser.add_argument("folder", type=str)
 args = parser.parse_args()
-if os.path.exists(f"./save/{args.folder}"):
+if os.path.exists(f"{args.folder}"):
     print("Loading...")
     time.sleep(0.5)
     print("Selamat datang di program \"Manajerial Candi\"\nSilahkan masukkan username Anda")
+    # Semua data csv ada di matriks user, candi, bahan_bangunan atau getData("nama matriks"). Tinggal dipakai
+    getData(user, "user")
+    getData(candi, "candi")
+    getData(bahan_bangunan, "bahan_bangunan")
     while True:
         masukan = input(">>> ")
-        getData(user, "user")
-        getData(candi, "candi")
-        getData(bahan_bangunan, "bahan_bangunan")
-        # Semua data csv ada di matriks user, candi, bahan_bangunan. Tinggal dipakai
-        if masukan == "login":
-            commands.login()
+        if masukan == "save":
+            commands.save(aksesData(user), aksesData(
+                candi), aksesData(bahan_bangunan))
         # elif masukan == "fungsi kalian"
             # commands.fungsi kalian jangan lupa tambahin ()
             # tulis fungsi kalian di file commands.py, kalau perlu parameter tinggal akses yang ada

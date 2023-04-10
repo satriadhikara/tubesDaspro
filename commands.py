@@ -2,6 +2,34 @@ import os
 import csv
 from random import randint
 
+
+def bangun(candi, bahan_bangunan, banyakDataCandi, user):
+    cukup = 0
+    pasir = randint(1, 5)
+    batu = randint(1, 5)
+    air = randint(1, 5)
+    if bahan_bangunan[1][2] >= pasir:
+        cukup += 1
+    if bahan_bangunan[2][2] >= batu:
+        cukup += 1
+    if bahan_bangunan[3][2] >= air:
+        cukup += 1
+    if cukup == 3:
+        jumlah = 100 - (banyakDataCandi - 1)
+        if jumlah != 0:
+            jumlah -= 1
+            candi[banyakDataCandi] = [banyakDataCandi, user, pasir, batu, air]
+            bahan_bangunan[1][2] -= pasir
+            bahan_bangunan[2][2] -= batu
+            bahan_bangunan[3][2] -= air
+        print("Candi berhasil dibangun")
+        print(f"Sisa candi yang perlu dibangun: {jumlah}.")
+        return candi
+    else:
+        print("Bahan bangunan tidak mencukupi.")
+        print("Candi tidak bisa dibangun!")
+
+
 def kumpul(bahan_bangunan):
     pasir = randint(0, 5)
     batu = randint(0, 5)
@@ -11,6 +39,7 @@ def kumpul(bahan_bangunan):
     bahan_bangunan[3][2] += air
     print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
     return bahan_bangunan
+
 
 def save(user, candi, bahan_bangunan):
     folder = input("Masukkan nama folder: ")

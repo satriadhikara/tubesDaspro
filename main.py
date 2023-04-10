@@ -89,6 +89,7 @@ if os.path.exists(f"{args.folder}"):
     getData(user, "user")
     getData(candi, "candi")
     getData(bahan_bangunan, "bahan_bangunan")
+    sesi = []
     while True:
         masukan = input(">>> ")
         if masukan == "save":
@@ -98,7 +99,33 @@ if os.path.exists(f"{args.folder}"):
             # commands.fungsi kalian jangan lupa tambahin ()
             # tulis fungsi kalian di file commands.py, kalau perlu parameter tinggal akses yang ada
         elif masukan == "summonjin":
-            user = commands.summonjin(user)
+            jin = 0
+            for i in range(banyakData(user)):
+                if jin == 100:
+                    print("Jin telah maksimal(100)")
+                    break
+                else:
+                    if str(user[i][2]) == "1" or str(user[i][2]) == "2":
+                        jin += 1
+            else:
+                user = commands.summonjin(user, banyakData(user))
+        elif masukan == "hapusjin":
+            user = commands.hapusjin(user, banyakData(user))
+        elif masukan == "login":
+            if sesi == []:
+                sesi = commands.login(aksesData(user), banyakData(user))
+            else:
+                print("Login gagal!")
+                print(
+                    f"Anda telah login dengan username {sesi[0]}, silahkan lakukan “logout” sebelum melakukan login kembali.")
+        elif masukan == "logout":
+            if sesi == []:
+                print("Logout gagal!")
+                print(
+                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout")
+            else:
+                print("Logout berhasil")
+                sesi = []
         else:
             # print()
             continue

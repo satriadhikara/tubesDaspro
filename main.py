@@ -25,7 +25,7 @@ bahan_bangunan = [None for _ in range(1000)]
 
 
 def getData(matriks, fileName):
-    with open(f"./save/{args.folder}/{fileName}.csv", "r") as csvfile:
+    with open(f"{args.folder}/{fileName}.csv", "r") as csvfile:
         file = csv.reader(csvfile)
         i = 0
         for lines in file:
@@ -97,6 +97,8 @@ if os.path.exists(f"{args.folder}"):
         # elif masukan == "fungsi kalian"
             # commands.fungsi kalian jangan lupa tambahin ()
             # tulis fungsi kalian di file commands.py, kalau perlu parameter tinggal akses yang ada
+        elif masukan == "summonjin":
+            user = commands.summonjin(user)
         else:
             # print()
             continue

@@ -111,6 +111,8 @@ if os.path.exists(f"{args.folder}"):
                 user = commands.summonjin(user, banyakData(user))
         elif masukan == "hapusjin":
             user = commands.hapusjin(user, banyakData(user))
+        elif masukan == "ubahjin":
+            user = commands.ubahjin(user, banyakData(user))
         elif masukan == "login":
             if sesi == []:
                 sesi = commands.login(aksesData(user), banyakData(user))

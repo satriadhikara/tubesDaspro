@@ -40,6 +40,8 @@ def save(user, candi, bahan_bangunan):
     print(f"Berhasil menyimpan data di folder {path}!")
     return
 
+# F03
+
 
 def summonjin(user, banyakData):
     # Input Jenis Jin
@@ -134,6 +136,37 @@ def hapusjin(user, banyakData):
             return user
     else:
         print("Jin tetap berada di alam gaib.")
+        return user
+
+# F05
+
+
+def ubahjin(user, banyakData):
+    username = input("Masukan username jin : ")
+    for i in range(banyakData):
+        if user[i][0] == username:
+            if user[i][2] == "1":
+                validasi = input(
+                    "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
+                if validasi == "Y":
+                    user[i][2] = 2
+                    print("Jin telah berhasil diubah.")
+                    return user
+                else:
+                    user[i][2] = user[i][2]
+                    return user
+            elif user[i][2] == "2":
+                validasi = input(
+                    "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
+                if validasi == "Y":
+                    user[i][2] = 1
+                    print("Jin telah berhasil diubah.")
+                    return user
+                else:
+                    user[i][2] = user[i][2]
+                    return user
+    else:
+        print("Tidak ada jin dengan username tersebut.")
         return user
 
 

@@ -126,6 +126,9 @@ if os.path.exists(f"{args.folder}"):
             else:
                 print("Logout berhasil")
                 sesi = []
+        elif masukan == "exit":
+            commands.exitProgram(aksesData(user), aksesData(
+                candi), aksesData(bahan_bangunan))
         else:
             # print()
             continue

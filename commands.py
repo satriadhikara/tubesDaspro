@@ -153,3 +153,12 @@ def login(user, banyakData):
                 return []
     print("Username tidak terdaftar!")
     return []
+
+
+def exitProgram(user, candi, bahan_bangunan):
+    while True:
+        prompt = input(
+            "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
+        if prompt == 'y':
+            save(user, candi, bahan_bangunan)
+        exit()

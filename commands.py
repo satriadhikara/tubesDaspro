@@ -1,10 +1,16 @@
 import os
 import csv
+from random import randint
 
-
-def login():
-    return
-
+def kumpul(bahan_bangunan):
+    pasir = randint(0, 5)
+    batu = randint(0, 5)
+    air = randint(0, 5)
+    bahan_bangunan[1][2] += pasir
+    bahan_bangunan[2][2] += batu
+    bahan_bangunan[3][2] += air
+    print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
+    return bahan_bangunan
 
 def save(user, candi, bahan_bangunan):
     folder = input("Masukkan nama folder: ")

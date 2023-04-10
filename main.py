@@ -89,6 +89,8 @@ if os.path.exists(f"{args.folder}"):
     getData(user, "user")
     getData(candi, "candi")
     getData(bahan_bangunan, "bahan_bangunan")
+    for i in range(1, 4):
+        bahan_bangunan[i][2] = int(bahan_bangunan[i][2])
     sesi = []
     while True:
         masukan = input(">>> ")
@@ -111,8 +113,6 @@ if os.path.exists(f"{args.folder}"):
                 user = commands.summonjin(user, banyakData(user))
         elif masukan == "hapusjin":
             user = commands.hapusjin(user, banyakData(user))
-        elif masukan == "ubahjin":
-            user = commands.ubahjin(user, banyakData(user))
         elif masukan == "login":
             if sesi == []:
                 sesi = commands.login(aksesData(user), banyakData(user))
@@ -131,6 +131,8 @@ if os.path.exists(f"{args.folder}"):
         elif masukan == "exit":
             commands.exitProgram(aksesData(user), aksesData(
                 candi), aksesData(bahan_bangunan))
+        elif masukan == "kumpul":
+            bahan_bangunan = commands.kumpul(bahan_bangunan)
         else:
             # print()
             continue

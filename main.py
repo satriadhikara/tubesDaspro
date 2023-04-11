@@ -16,7 +16,7 @@ import csv
 # Matriks database
 user = [None for _ in range(1000)]
 candi = [None for _ in range(1000)]
-bahan_bangunan = [None for _ in range(1000)]
+bahan_bangunan = [None for _ in range(5)]
 
 
 # Fungsi - fungsi (jangan diapa2in)
@@ -78,7 +78,7 @@ def banyakData(matriks):
     return i
 
 
-parser = argparse.ArgumentParser(description="List fish in aquarium.")
+parser = argparse.ArgumentParser(description="")
 parser.add_argument("folder", type=str)
 args = parser.parse_args()
 if os.path.exists(f"{args.folder}"):
@@ -147,8 +147,8 @@ if os.path.exists(f"{args.folder}"):
             if sesi == []:
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan ubahjin")
-            # elif sesi[1] == "bandung_bondowoso":
-                # commands.ubahjin()
+            elif sesi[1] == "bandung_bondowoso":
+                user = commands.ubahjin(user, banyakData(user))
             else:
                 print("Anda tidak mempunyai akses")
         # F-06
@@ -156,7 +156,7 @@ if os.path.exists(f"{args.folder}"):
             if sesi == []:
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan bangun")
-            elif sesi[1] == 2:
+            elif int(sesi[1]) == 2:
                 candi = commands.bangun(
                     candi, bahan_bangunan, banyakData(candi), sesi[0])
             else:
@@ -166,16 +166,17 @@ if os.path.exists(f"{args.folder}"):
             if sesi == []:
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan kumpul")
-            elif sesi[1] == 1:
+            elif int(sesi[1]) == 1:
                 bahan_bangunan = commands.kumpul(bahan_bangunan)
             else:
                 print("Anda tidak mempunyai akses")
+
         # F-14
         elif masukan == "save":
             commands.save(aksesData(user), aksesData(
                 candi), aksesData(bahan_bangunan))
 
-        # F-15
+        # F-16
         elif masukan == "exit":
             commands.exitProgram(aksesData(user), aksesData(
                 candi), aksesData(bahan_bangunan))

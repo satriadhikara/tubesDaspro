@@ -1,79 +1,27 @@
+# Commands
 import os
 import csv
 from random import randint
 
-
-def bangun(candi, bahan_bangunan, banyakDataCandi, user):
-    cukup = 0
-    pasir = randint(1, 5)
-    batu = randint(1, 5)
-    air = randint(1, 5)
-    if bahan_bangunan[1][2] >= pasir:
-        cukup += 1
-    if bahan_bangunan[2][2] >= batu:
-        cukup += 1
-    if bahan_bangunan[3][2] >= air:
-        cukup += 1
-    if cukup == 3:
-        jumlah = 100 - (banyakDataCandi - 1)
-        if jumlah != 0:
-            jumlah -= 1
-            candi[banyakDataCandi] = [banyakDataCandi, user, pasir, batu, air]
-            bahan_bangunan[1][2] -= pasir
-            bahan_bangunan[2][2] -= batu
-            bahan_bangunan[3][2] -= air
-        print("Candi berhasil dibangun")
-        print(f"Sisa candi yang perlu dibangun: {jumlah}.")
-        return candi
-    else:
-        print("Bahan bangunan tidak mencukupi.")
-        print("Candi tidak bisa dibangun!")
+# F-01
 
 
-def kumpul(bahan_bangunan):
-    pasir = randint(0, 5)
-    batu = randint(0, 5)
-    air = randint(0, 5)
-    bahan_bangunan[1][2] += pasir
-    bahan_bangunan[2][2] += batu
-    bahan_bangunan[3][2] += air
-    print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
-    return bahan_bangunan
+def login(user, banyakData):
+    Username = str(input("Username: "))
+    Password = str(input("Password: "))
 
-
-def save(user, candi, bahan_bangunan):
-    folder = input("Masukkan nama folder: ")
-    print("\nSaving...\n")
-    folder += "/"
-    jumlah = 0
-    for i in range(len(folder)):
-        if folder[i] == "/":
-            jumlah += 1
-    i = 0
-    batas = 0
-    path = ""
-    while batas != jumlah:
-        if folder[i] != "/":
-            path += folder[i]
-            i += 1
-        else:
-            if os.path.exists(path) == False:
-                print(f"Membuat folder {path}...")
-                os.mkdir(path)
-            batas += 1
-            path += folder[i]
-            i += 1
-    with open(f'{path}/user.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=";")
-        writer.writerows(user)
-    with open(f'{path}/candi.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=";")
-        writer.writerows(candi)
-    with open(f'{path}/bahan_bangunan.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=";")
-        writer.writerows(bahan_bangunan)
-    print(f"Berhasil menyimpan data di folder {path}!")
-    return
+    for i in range(banyakData):
+        if Username == user[i][0]:
+            if Password == user[i][1]:
+                print(f"Selamat datang {Username}!")
+                print(
+                    "Masukkan command “help” untuk daftar command yang dapat kamu panggil.")
+                return [Username, user[i][2]]
+            else:
+                print("Password salah!")
+                return []
+    print("Username tidak terdaftar!")
+    return []
 
 # F03
 
@@ -116,7 +64,6 @@ def summonjin(user, banyakData):
         else:
             print("Username sudah digunakan.")
             return user
-
     elif jj == 2:
         print('Memilih jin "Pembangun". ')
         # Input username Jin Pembangun dan password
@@ -204,23 +151,86 @@ def ubahjin(user, banyakData):
         print("Tidak ada jin dengan username tersebut.")
         return user
 
+# F-06
 
-def login(user, banyakData):
-    Username = str(input("Username: "))
-    Password = str(input("Password: "))
 
-    for i in range(banyakData):
-        if Username == user[i][0]:
-            if Password == user[i][1]:
-                print(f"Selamat datang {Username}!")
-                print(
-                    "Masukkan command “help” untuk daftar command yang dapat kamu panggil.")
-                return [Username, user[i][2]]
-            else:
-                print("Password salah!")
-                return []
-    print("Username tidak terdaftar!")
-    return []
+def bangun(candi, bahan_bangunan, banyakDataCandi, user):
+    cukup = 0
+    pasir = randint(1, 5)
+    batu = randint(1, 5)
+    air = randint(1, 5)
+    if bahan_bangunan[1][2] >= pasir:
+        cukup += 1
+    if bahan_bangunan[2][2] >= batu:
+        cukup += 1
+    if bahan_bangunan[3][2] >= air:
+        cukup += 1
+    if cukup == 3:
+        jumlah = 100 - (banyakDataCandi - 1)
+        if jumlah != 0:
+            jumlah -= 1
+            candi[banyakDataCandi] = [banyakDataCandi, user, pasir, batu, air]
+            bahan_bangunan[1][2] -= pasir
+            bahan_bangunan[2][2] -= batu
+            bahan_bangunan[3][2] -= air
+        print("Candi berhasil dibangun")
+        print(f"Sisa candi yang perlu dibangun: {jumlah}.")
+        return candi
+    else:
+        print("Bahan bangunan tidak mencukupi.")
+        print("Candi tidak bisa dibangun!")
+
+# F-07
+
+
+def kumpul(bahan_bangunan):
+    pasir = randint(0, 5)
+    batu = randint(0, 5)
+    air = randint(0, 5)
+    bahan_bangunan[1][2] += pasir
+    bahan_bangunan[2][2] += batu
+    bahan_bangunan[3][2] += air
+    print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
+    return bahan_bangunan
+
+# F-14
+
+
+def save(user, candi, bahan_bangunan):
+    folder = input("Masukkan nama folder: ")
+    print("\nSaving...\n")
+    folder += "/"
+    jumlah = 0
+    for i in range(len(folder)):
+        if folder[i] == "/":
+            jumlah += 1
+    i = 0
+    batas = 0
+    path = ""
+    while batas != jumlah:
+        if folder[i] != "/":
+            path += folder[i]
+            i += 1
+        else:
+            if os.path.exists(path) == False:
+                print(f"Membuat folder {path}...")
+                os.mkdir(path)
+            batas += 1
+            path += folder[i]
+            i += 1
+    with open(f'{path}/user.csv', 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=";")
+        writer.writerows(user)
+    with open(f'{path}/candi.csv', 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=";")
+        writer.writerows(candi)
+    with open(f'{path}/bahan_bangunan.csv', 'w', newline='') as file:
+        writer = csv.writer(file, delimiter=";")
+        writer.writerows(bahan_bangunan)
+    print(f"Berhasil menyimpan data di folder {path}!")
+    return
+
+# F-16
 
 
 def exitProgram(user, candi, bahan_bangunan):

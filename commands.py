@@ -273,30 +273,6 @@ def bantuan(akun):
    Untuk menyimpan data
 10. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         summonjin()
-      elif(opsi == 3):
-         hapusjin()
-      elif(opsi == 4):
-         ubahjin()
-      elif(opsi == 5):
-         batchkumpul()
-      elif(opsi == 6):
-         batchbangun()
-      elif(opsi == 7):
-         laporanjin()
-      elif(opsi == 8):
-         laporancandi()
-      elif(opsi == 9):
-         save()
-      elif(opsi == 10):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
 
    elif akun == "roro_jonggrang":
       print(f"""
@@ -311,20 +287,6 @@ def bantuan(akun):
    Untuk menyimpan data
 5. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         hancurkancandi()
-      elif(opsi == 3):
-         ayamberkokok()
-      elif(opsi == 4):
-         save()
-      elif(opsi == 5):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
 
    elif akun == "1":
       print(f"""
@@ -335,16 +297,6 @@ def bantuan(akun):
    Untuk mengumpulkan resource candi
 3. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         kumpul()
-      elif(opsi == 3):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
 
    elif akun == "2":
       print(f"""
@@ -355,16 +307,6 @@ def bantuan(akun):
    Untuk membangun candi
 3. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         bangun()
-      elif(opsi == 3):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
 
    else: # Pemain belum login
       print(f"""
@@ -375,16 +317,6 @@ def bantuan(akun):
    Untuk memuat file eksternal ke dalam permainan
 3. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         login()
-      elif(opsi == 2):
-         load()
-      elif(opsi == 3):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
 
 
 # F-16

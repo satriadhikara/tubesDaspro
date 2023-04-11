@@ -175,7 +175,9 @@ if os.path.exists(f"{args.folder}"):
         elif masukan == "save":
             commands.save(aksesData(user), aksesData(
                 candi), aksesData(bahan_bangunan))
-
+        # F-15
+        elif masukan == "help":
+            commands.bantuan(sesi[1])   
         # F-16
         elif masukan == "exit":
             commands.exitProgram(aksesData(user), aksesData(

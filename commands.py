@@ -193,6 +193,24 @@ def kumpul(bahan_bangunan):
     print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
     return bahan_bangunan
 
+# F12 - Ayam Berkokok
+def ayamberkokok():
+   print()
+   print("Kukuruyuk.. Kukuruyuk..")
+   print()
+   print("Jumlah candi:", totalcandi)
+   if(totalcandi<100):
+      print(f"""
+Selamat, Roro Jonggrang memenangkan permainan!
+
+*Bandung Bondowoso angry noise*
+Roro Jonggrang dikutuk menjadi candi.""")
+      exit()
+   else: # total candi >= 100
+      print(f"""
+Yah, Bandung Bondowoso memenangkan permainan!""")
+      exit()
+
 # F-14
 
 
@@ -229,6 +247,145 @@ def save(user, candi, bahan_bangunan):
         writer.writerows(bahan_bangunan)
     print(f"Berhasil menyimpan data di folder {path}!")
     return
+
+# F15 - Help
+def bantuan(akun):
+   if akun == "bandung_bondowoso":
+      print(f"""
+=========== HELP ===========
+1. logout
+   Untuk keluar dari akun yang digunakan sekarang
+2. summonjin
+   Untuk memanggil jin
+3. hapusjin
+   Untuk menghilangkan jin
+4. ubahjin
+   Untuk mengubah tipe jin
+5. batchkumpul
+   Untuk memerintahkan seluruh jin pengumpul mengumpulkan bahan
+6. batchbangun
+   Untuk memerintahkan seluruh jin pembangun membangun candi
+7. laporanjin
+   Untuk mengambil laporan kinerja seluruh jin
+8. laporancandi
+   Untuk mengambil laporan progress pembangunan candi
+9. save
+   Untuk menyimpan data
+10. exit
+   Untuk keluar dari permainan""")
+      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+      if(opsi == 1):
+         logout()
+      elif(opsi == 2):
+         summonjin()
+      elif(opsi == 3):
+         hapusjin()
+      elif(opsi == 4):
+         ubahjin()
+      elif(opsi == 5):
+         batchkumpul()
+      elif(opsi == 6):
+         batchbangun()
+      elif(opsi == 7):
+         laporanjin()
+      elif(opsi == 8):
+         laporancandi()
+      elif(opsi == 9):
+         save()
+      elif(opsi == 10):
+         keluar()
+      else: #Opsi tidak valid
+         print("Opsi anda tidak valid")
+         bantuan()
+
+   elif akun == "roro_jonggrang":
+      print(f"""
+=========== HELP ===========
+1. logout
+   Untuk keluar dari akun yang digunakan sekarang
+2. hancurkancandi
+   Untuk menghancurkan candi yang tersedia
+3. ayamberkokok
+   Untuk menyelesaikan permainan
+4. save
+   Untuk menyimpan data
+5. exit
+   Untuk keluar dari permainan""")
+      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+      if(opsi == 1):
+         logout()
+      elif(opsi == 2):
+         hancurkancandi()
+      elif(opsi == 3):
+         ayamberkokok()
+      elif(opsi == 4):
+         save()
+      elif(opsi == 5):
+         keluar()
+      else: #Opsi tidak valid
+         print("Opsi anda tidak valid")
+         bantuan()
+
+   elif akun == "1":
+      print(f"""
+=========== HELP ===========
+1. logout
+   Untuk keluar dari akun yang digunakan sekarang
+2. kumpul
+   Untuk mengumpulkan resource candi
+3. exit
+   Untuk keluar dari permainan""")
+      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+      if(opsi == 1):
+         logout()
+      elif(opsi == 2):
+         kumpul()
+      elif(opsi == 3):
+         keluar()
+      else: #Opsi tidak valid
+         print("Opsi anda tidak valid")
+         bantuan()
+
+   elif akun == "2":
+      print(f"""
+=========== HELP ===========
+1. logout
+   Untuk keluar dari akun yang digunakan sekarang
+2. bangun
+   Untuk membangun candi
+3. exit
+   Untuk keluar dari permainan""")
+      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+      if(opsi == 1):
+         logout()
+      elif(opsi == 2):
+         bangun()
+      elif(opsi == 3):
+         keluar()
+      else: #Opsi tidak valid
+         print("Opsi anda tidak valid")
+         bantuan()
+
+   else: # Pemain belum login
+      print(f"""
+=========== HELP ===========
+1. login
+   Untuk masuk menggunakan akun
+2. load
+   Untuk memuat file eksternal ke dalam permainan
+3. exit
+   Untuk keluar dari permainan""")
+      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+      if(opsi == 1):
+         login()
+      elif(opsi == 2):
+         load()
+      elif(opsi == 3):
+         keluar()
+      else: #Opsi tidak valid
+         print("Opsi anda tidak valid")
+         bantuan()
+
 
 # F-16
 

@@ -194,7 +194,7 @@ def kumpul(bahan_bangunan):
     return bahan_bangunan
 
 # F12 - Ayam Berkokok
-def ayamberkokok():
+def ayamberkokok(totalcandi):
    print()
    print("Kukuruyuk.. Kukuruyuk..")
    print()

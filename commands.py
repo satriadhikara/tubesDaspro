@@ -52,7 +52,7 @@ def summonjin(user, banyakData):
                     if user[i] != None:
                         i += 1
                     else:
-                        user[i] = [username, password, jj]
+                        user[i] = [username, password, "pengumpul"]
                         print("Mengumpulkan sesajen...")
                         print("Menyerahkan sesajen...")
                         print("Membacakan mantra...")
@@ -83,7 +83,7 @@ def summonjin(user, banyakData):
                     if user[i] != None:
                         i += 1
                     else:
-                        user[i] = [username, password, jj]
+                        user[i] = [username, password, "pembangun"]
                         print("Mengumpulkan sesajen...")
                         print("Menyerahkan sesajen...")
                         print("Membacakan mantra...")
@@ -110,7 +110,10 @@ def hapusjin(user, banyakData):
     if validasi == 'Y':
         for i in range(banyakData):
             if user[i][0] == username:
-                user[i] = None
+                if i != (banyakData - 1):
+                    for j in range(i, banyakData - 1):
+                        user[j] = user[j + 1]
+                    user[banyakData - 1] = None
                 print("Jin telah berhasil dihapus dari alam gaib.")
                 return user
         else:
@@ -127,21 +130,21 @@ def ubahjin(user, banyakData):
     username = input("Masukan username jin : ")
     for i in range(banyakData):
         if user[i][0] == username:
-            if user[i][2] == "1":
+            if user[i][2] == "pengumpul":
                 validasi = input(
                     "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
                 if validasi == "Y":
-                    user[i][2] = 2
+                    user[i][2] = "pembangun"
                     print("Jin telah berhasil diubah.")
                     return user
                 else:
                     user[i][2] = user[i][2]
                     return user
-            elif user[i][2] == "2":
+            elif user[i][2] == "pembangun":
                 validasi = input(
                     "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
                 if validasi == "Y":
-                    user[i][2] = 1
+                    user[i][2] = "pengumpul"
                     print("Jin telah berhasil diubah.")
                     return user
                 else:
@@ -193,23 +196,85 @@ def kumpul(bahan_bangunan):
     print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
     return bahan_bangunan
 
+# F-10
+
+
+def hargaCandi(candiRow):
+    return ((candiRow[2] * 10000) + (candiRow[3] * 15000) + (candiRow[4] * 7500))
+
+
+def laporanCandi(candi, banyakData):
+    totalPasir = 0
+    totalBatu = 0
+    totalAir = 0
+    if banyakData > 1:
+        maks = hargaCandi(candi[1])
+        min = hargaCandi(candi[1])
+        idMaks = 1
+        idMin = 1
+        for i in range(1, banyakData):
+            totalPasir += int(candi[i][2])
+            totalBatu += int(candi[i][3])
+            totalAir += int(candi[i][4])
+            if maks < hargaCandi(candi[i]):
+                maks = hargaCandi(candi[i])
+                idMaks = i
+            if min > hargaCandi(candi[i]):
+                min = hargaCandi(candi[i])
+                idMin = i
+        print(f"Total candi: {banyakData - 1}")
+        print(f"Total pasir yang digunakan: {totalPasir}")
+        print(f"Total batu yang digunakan: {totalBatu}")
+        print(f"Total air yang digunakan: {totalAir}")
+        print(f"ID Candi Termahal: {idMaks} (Rp {maks})")
+        print(f"ID Candi Termural: {idMin} (Rp {min})")
+    else:
+        for i in range(1, banyakData):
+            totalPasir += int(candi[i][2])
+            totalBatu += int(candi[i][3])
+            totalAir += int(candi[i][4])
+        print(f"Total candi: {banyakData - 1}")
+        print(f"Total pasir yang digunakan: {totalPasir}")
+        print(f"Total batu yang digunakan: {totalBatu}")
+        print(f"Total air yang digunakan: {totalAir}")
+        print(f"ID Candi Termahal: -")
+        print(f"ID Candi Termurah: -")
+
+# F-11
+
+
+def hancurkanCandi(candi, banyakData):
+    idCandi = int(input("Masukkan ID candi: "))
+    for i in range(banyakData):
+        if int(candi[i][0]) == idCandi:
+            if i != (banyakData - 1):
+                for j in range(i, banyakData - 1):
+                    candi[j] = candi[j + 1]
+                candi[banyakData - 1] = None
+    else:
+        print("Tidak ada candi dengan ID tersebut")
+    return candi
+
+
 # F12 - Ayam Berkokok
+
+
 def ayamberkokok(totalcandi):
-   print()
-   print("Kukuruyuk.. Kukuruyuk..")
-   print()
-   print("Jumlah candi:", totalcandi)
-   if(totalcandi<100):
-      print(f"""
+    print()
+    print("Kukuruyuk.. Kukuruyuk..")
+    print()
+    print("Jumlah candi:", totalcandi)
+    if (totalcandi < 100):
+        print(f"""
 Selamat, Roro Jonggrang memenangkan permainan!
 
 *Bandung Bondowoso angry noise*
 Roro Jonggrang dikutuk menjadi candi.""")
-      exit()
-   else: # total candi >= 100
-      print(f"""
+        exit()
+    else:  # total candi >= 100
+        print(f"""
 Yah, Bandung Bondowoso memenangkan permainan!""")
-      exit()
+        exit()
 
 # F-14
 
@@ -249,9 +314,11 @@ def save(user, candi, bahan_bangunan):
     return
 
 # F15 - Help
+
+
 def bantuan(akun):
-   if akun == "bandung_bondowoso":
-      print(f"""
+    if akun == "bandung_bondowoso":
+        print(f"""
 =========== HELP ===========
 1. logout
    Untuk keluar dari akun yang digunakan sekarang
@@ -273,33 +340,33 @@ def bantuan(akun):
    Untuk menyimpan data
 10. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         summonjin()
-      elif(opsi == 3):
-         hapusjin()
-      elif(opsi == 4):
-         ubahjin()
-      elif(opsi == 5):
-         batchkumpul()
-      elif(opsi == 6):
-         batchbangun()
-      elif(opsi == 7):
-         laporanjin()
-      elif(opsi == 8):
-         laporancandi()
-      elif(opsi == 9):
-         save()
-      elif(opsi == 10):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
+        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+        # if (opsi == 1):
+        #     logout()
+        # elif (opsi == 2):
+        #     summonjin()
+        # elif (opsi == 3):
+        #     hapusjin()
+        # elif (opsi == 4):
+        #     ubahjin()
+        # elif (opsi == 5):
+        #     batchkumpul()
+        # elif (opsi == 6):
+        #     batchbangun()
+        # elif (opsi == 7):
+        #     laporanjin()
+        # elif (opsi == 8):
+        #     laporancandi()
+        # elif (opsi == 9):
+        #     save()
+        # elif (opsi == 10):
+        #     keluar()
+        # else:  # Opsi tidak valid
+        #     print("Opsi anda tidak valid")
+        #     bantuan()
 
-   elif akun == "roro_jonggrang":
-      print(f"""
+    elif akun == "roro_jonggrang":
+        print(f"""
 =========== HELP ===========
 1. logout
    Untuk keluar dari akun yang digunakan sekarang
@@ -311,23 +378,23 @@ def bantuan(akun):
    Untuk menyimpan data
 5. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         hancurkancandi()
-      elif(opsi == 3):
-         ayamberkokok()
-      elif(opsi == 4):
-         save()
-      elif(opsi == 5):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
+        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+        # if (opsi == 1):
+        #     logout()
+        # elif (opsi == 2):
+        #     hancurkancandi()
+        # elif (opsi == 3):
+        #     ayamberkokok()
+        # elif (opsi == 4):
+        #     save()
+        # elif (opsi == 5):
+        #     keluar()
+        # else:  # Opsi tidak valid
+        #     print("Opsi anda tidak valid")
+        #     bantuan()
 
-   elif akun == "1":
-      print(f"""
+    elif akun == "pengumpul":
+        print(f"""
 =========== HELP ===========
 1. logout
    Untuk keluar dari akun yang digunakan sekarang
@@ -335,19 +402,19 @@ def bantuan(akun):
    Untuk mengumpulkan resource candi
 3. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         kumpul()
-      elif(opsi == 3):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
+        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+        # if (opsi == 1):
+        #     logout()
+        # elif (opsi == 2):
+        #     kumpul()
+        # elif (opsi == 3):
+        #     keluar()
+        # else:  # Opsi tidak valid
+        #     print("Opsi anda tidak valid")
+        #     bantuan()
 
-   elif akun == "2":
-      print(f"""
+    elif akun == "pembangun":
+        print(f"""
 =========== HELP ===========
 1. logout
    Untuk keluar dari akun yang digunakan sekarang
@@ -355,19 +422,19 @@ def bantuan(akun):
    Untuk membangun candi
 3. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         logout()
-      elif(opsi == 2):
-         bangun()
-      elif(opsi == 3):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
+        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+        # if (opsi == 1):
+        #     logout()
+        # elif (opsi == 2):
+        #     bangun()
+        # elif (opsi == 3):
+        #     keluar()
+        # else:  # Opsi tidak valid
+        #     print("Opsi anda tidak valid")
+        #     bantuan()
 
-   else: # Pemain belum login
-      print(f"""
+    else:  # Pemain belum login
+        print(f"""
 =========== HELP ===========
 1. login
    Untuk masuk menggunakan akun
@@ -375,16 +442,16 @@ def bantuan(akun):
    Untuk memuat file eksternal ke dalam permainan
 3. exit
    Untuk keluar dari permainan""")
-      opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-      if(opsi == 1):
-         login()
-      elif(opsi == 2):
-         load()
-      elif(opsi == 3):
-         keluar()
-      else: #Opsi tidak valid
-         print("Opsi anda tidak valid")
-         bantuan()
+        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
+        # if (opsi == 1):
+        #     login()
+        # elif (opsi == 2):
+        #     load()
+        # elif (opsi == 3):
+        #     keluar()
+        # else:  # Opsi tidak valid
+        #     print("Opsi anda tidak valid")
+        #     bantuan()
 
 
 # F-16

@@ -156,7 +156,7 @@ if os.path.exists(f"{args.folder}"):
             if sesi == []:
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan bangun")
-            elif int(sesi[1]) == 2:
+            elif sesi[1] == "pembangun":
                 candi = commands.bangun(
                     candi, bahan_bangunan, banyakData(candi), sesi[0])
             else:
@@ -166,18 +166,39 @@ if os.path.exists(f"{args.folder}"):
             if sesi == []:
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan kumpul")
-            elif int(sesi[1]) == 1:
+            elif sesi[1] == "pengumpul":
                 bahan_bangunan = commands.kumpul(bahan_bangunan)
             else:
                 print("Anda tidak mempunyai akses")
 
+        # F-10
+        elif masukan == "laporancandi":
+            if sesi == []:
+                print(
+                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan laporancandi")
+            elif sesi[1] == "bandung_bondowoso":
+                commands.laporanCandi(candi, banyakData(candi))
+            else:
+                print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso")
+        # F-11
+        elif masukan == "hancurkancandi":
+            if sesi == []:
+                print(
+                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan hancurkancandi")
+            elif sesi[1] == "roro_jonggrang":
+                candi = commands.hancurkanCandi(candi, banyakData(candi))
+            else:
+                print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang")
+        # F-12
+        elif masukan == "ayamberkokok":
+            commands.ayamberkokok(banyakData(candi) - 1)
         # F-14
         elif masukan == "save":
             commands.save(aksesData(user), aksesData(
                 candi), aksesData(bahan_bangunan))
         # F-15
         elif masukan == "help":
-            commands.bantuan(sesi[1])   
+            commands.bantuan(sesi[1])
         # F-16
         elif masukan == "exit":
             commands.exitProgram(aksesData(user), aksesData(

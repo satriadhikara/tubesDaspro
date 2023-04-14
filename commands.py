@@ -103,25 +103,42 @@ def summonjin(user, banyakData):
 # F04
 
 
-def hapusjin(user, banyakData):
+def hapusCandi(username, candi, banyakData):
+    for i in range(banyakData):
+        if candi[i][1] == username:
+            if i == (banyakData - 1):
+                candi[i] = None
+            elif i != (banyakData - 1):
+                for j in range(i, banyakData - 1):
+                    candi[j] = candi[j + 1]
+                candi[banyakData - 1] = None
+            return hapusCandi(username, candi, banyakData - 1)
+    else:
+        return candi
+
+
+def hapusjin(user, banyakDataUser, candi, banyakDataCandi):
     username = input("Masukan username jin : ")
     validasi = input(
         f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
     if validasi == 'Y':
-        for i in range(banyakData):
+        for i in range(banyakDataUser):
             if user[i][0] == username:
-                if i != (banyakData - 1):
-                    for j in range(i, banyakData - 1):
+                candi = hapusCandi(username, candi, banyakDataCandi)
+                if i == (banyakDataUser - 1):
+                    user[i] = None
+                elif i != (banyakDataUser - 1):
+                    for j in range(i, banyakDataUser - 1):
                         user[j] = user[j + 1]
-                    user[banyakData - 1] = None
+                    user[banyakDataUser - 1] = None
                 print("Jin telah berhasil dihapus dari alam gaib.")
-                return user
+                return (user, candi)
         else:
             print("Tidak ada jin dengan username tersebut.")
-            return user
+            return (user, candi)
     else:
         print("Jin tetap berada di alam gaib.")
-        return user
+        return (user, candi)
 
 # F05
 
@@ -162,6 +179,10 @@ def bangun(candi, bahan_bangunan, banyakDataCandi, user):
     pasir = randint(1, 5)
     batu = randint(1, 5)
     air = randint(1, 5)
+    maks = 0
+    for i in range(1, banyakDataCandi):
+        if maks < candi[i][0]:
+            maks = candi[i][0]
     if bahan_bangunan[1][2] >= pasir:
         cukup += 1
     if bahan_bangunan[2][2] >= batu:
@@ -172,7 +193,7 @@ def bangun(candi, bahan_bangunan, banyakDataCandi, user):
         jumlah = 100 - (banyakDataCandi - 1)
         if jumlah != 0:
             jumlah -= 1
-            candi[banyakDataCandi] = [banyakDataCandi, user, pasir, batu, air]
+            candi[banyakDataCandi] = [maks + 1, user, pasir, batu, air]
             bahan_bangunan[1][2] -= pasir
             bahan_bangunan[2][2] -= batu
             bahan_bangunan[3][2] -= air
@@ -247,7 +268,9 @@ def hancurkanCandi(candi, banyakData):
     idCandi = int(input("Masukkan ID candi: "))
     for i in range(banyakData):
         if int(candi[i][0]) == idCandi:
-            if i != (banyakData - 1):
+            if i == (banyakData - 1):
+                candi[i] = None
+            elif i != (banyakData - 1):
                 for j in range(i, banyakData - 1):
                     candi[j] = candi[j + 1]
                 candi[banyakData - 1] = None
@@ -279,8 +302,10 @@ Yah, Bandung Bondowoso memenangkan permainan!""")
 # F-14
 
 
-def save(user, candi, bahan_bangunan):
-    folder = input("Masukkan nama folder: ")
+def save(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDataBahan):
+    folder = "save/"
+    temp = input("Masukkan nama folder: ")
+    folder += temp
     print("\nSaving...\n")
     folder += "/"
     jumlah = 0
@@ -302,14 +327,26 @@ def save(user, candi, bahan_bangunan):
             path += folder[i]
             i += 1
     with open(f'{path}/user.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=";")
-        writer.writerows(user)
+        for i in range(banyakDataUser):
+            for j in range(3):
+                file.write(str(user[i][j]))
+                if j != 2:
+                    file.write(";")
+            file.write("\n")
     with open(f'{path}/candi.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=";")
-        writer.writerows(candi)
+        for i in range(banyakDataCandi):
+            for j in range(5):
+                file.write(str(candi[i][j]))
+                if j != 4:
+                    file.write(";")
+            file.write("\n")
     with open(f'{path}/bahan_bangunan.csv', 'w', newline='') as file:
-        writer = csv.writer(file, delimiter=";")
-        writer.writerows(bahan_bangunan)
+        for i in range(banyakDataBahan):
+            for j in range(3):
+                file.write(str(bahan_bangunan[i][j]))
+                if j != 2:
+                    file.write(";")
+            file.write("\n")
     print(f"Berhasil menyimpan data di folder {path}!")
     return
 
@@ -457,10 +494,11 @@ def bantuan(akun):
 # F-16
 
 
-def exitProgram(user, candi, bahan_bangunan):
+def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDataBahan):
     while True:
         prompt = input(
             "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
         if prompt == 'y':
-            save(user, candi, bahan_bangunan)
+            save(user, banyakDataUser, candi, banyakDataCandi,
+                 bahan_bangunan, banyakDataBahan)
         exit()

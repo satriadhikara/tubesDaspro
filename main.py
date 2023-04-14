@@ -11,7 +11,6 @@ import time
 import argparse
 import datetime
 import commands
-import csv
 
 # Matriks database
 user = [None for _ in range(1000)]
@@ -25,15 +24,30 @@ bahan_bangunan = [None for _ in range(5)]
 
 
 def getData(matriks, fileName):
-    with open(f"{args.folder}/{fileName}.csv", "r") as csvfile:
-        file = csv.reader(csvfile)
-        i = 0
-        for lines in file:
-            matriks[i] = splits((lines)[0], fileName)
-            i += 1
-
+    with open(f"save/{args.folder}/{fileName}.csv", "r") as file:
+        contents = file.read()
+    contents += "\n"
+    total = 0
+    for i in range(len(contents)):
+        if contents[i] == '\n':
+            total += 1
+    kata = ""
+    j = 0
+    temp = [None for _ in range(total)]
+    for i in range(len(contents)):
+        if contents[i] == '\n':
+            temp[j] = kata
+            kata = ""
+            j += 1
+        else:
+            kata += contents[i]
+    for i in range(total):
+        if temp[i] != '':
+            matriks[i] = splits(temp[i], fileName)
 
 # Fungsi split (cuman buat data)
+
+
 def splits(baris, fileName):
     baris += ";"
     j = 0
@@ -81,7 +95,7 @@ def banyakData(matriks):
 parser = argparse.ArgumentParser(description="")
 parser.add_argument("folder", type=str)
 args = parser.parse_args()
-if os.path.exists(f"{args.folder}"):
+if os.path.exists(f"save/{args.folder}"):
     print("Loading...")
     time.sleep(0.5)
     print("Selamat datang di program \"Manajerial Candi\"\nSilahkan masukkan username Anda")
@@ -121,14 +135,9 @@ if os.path.exists(f"{args.folder}"):
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan summonjin")
             elif sesi[1] == "bandung_bondowoso":
-                jin = 0
-                for i in range(banyakData(user)):
-                    if jin == 100:
-                        print("Jin telah maksimal(100)")
-                        break
-                    else:
-                        if str(user[i][2]) == "1" or str(user[i][2]) == "2":
-                            jin += 1
+                if (banyakData(user) - 3) >= 100:
+                    print(
+                        "Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
                 else:
                     user = commands.summonjin(user, banyakData(user))
             else:
@@ -139,7 +148,8 @@ if os.path.exists(f"{args.folder}"):
                 print(
                     "Anda belum login, silahkan login terlebih dahulu sebelum melakukan hapusjin")
             elif sesi[1] == "bandung_bondowoso":
-                user = commands.hapusjin(user, banyakData(user))
+                user, candi = commands.hapusjin(
+                    user, banyakData(user), candi, banyakData(candi))
             else:
                 print("Anda tidak mempunyai akses")
         # F-05
@@ -194,15 +204,18 @@ if os.path.exists(f"{args.folder}"):
             commands.ayamberkokok(banyakData(candi) - 1)
         # F-14
         elif masukan == "save":
-            commands.save(aksesData(user), aksesData(
-                candi), aksesData(bahan_bangunan))
+            commands.save(aksesData(user), banyakData(user), aksesData(
+                candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
         # F-15
         elif masukan == "help":
-            commands.bantuan(sesi[1])
+            if sesi == []:
+                commands.bantuan("")
+            else:
+                commands.bantuan(sesi[1])
         # F-16
         elif masukan == "exit":
-            commands.exitProgram(aksesData(user), aksesData(
-                candi), aksesData(bahan_bangunan))
+            commands.exitProgram(aksesData(user), banyakData(user), aksesData(
+                candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
          # elif masukan == "fungsi kalian"
             # commands.fungsi kalian jangan lupa tambahin ()
             # tulis fungsi kalian di file commands.py, kalau perlu parameter tinggal akses yang ada

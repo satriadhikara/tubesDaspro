@@ -185,14 +185,14 @@ if os.path.exists(f"save/{args.folder}"):
         # @Jebe kurang ini
         # F-08
             # batch kumpul
-            elif masukan == "batchkumpul":
-                if sesi == []:
-                    print(
-                        "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchkumpul")
-                elif sesi[1] == "bandung_bondowoso":
-                    bahan_bangunan = commands.batchkumpul(user, banyakData(user), bahan_bangunan)
-                else:
-                    print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso")
+        elif masukan == "batchkumpul":
+            if sesi == []:
+                print(
+                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchkumpul")
+            elif sesi[1] == "bandung_bondowoso":
+                bahan_bangunan = commands.batchkumpul(user, banyakData(user), bahan_bangunan)
+            else:
+                print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso")
         # F-09
 
         # F-10

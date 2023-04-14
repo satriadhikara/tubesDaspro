@@ -156,8 +156,24 @@ def ubahjin(user, banyakData):
                         print("Jin telah berhasil diubah.")
                     elif validasi == "N" or validasi == 'n':
                         user[i][2] = user[i][2]
+                while True:
+                    validasi = input(
+                        "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
+                    if validasi == "Y" or validasi == 'y':
+                        user[i][2] = "pembangun"
+                        print("Jin telah berhasil diubah.")
+                    elif validasi == "N" or validasi == 'n':
+                        user[i][2] = user[i][2]
                     return user
             elif user[i][2] == "pembangun":
+                while True:
+                    validasi = input(
+                        "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
+                    if validasi == "Y" or validasi == 'y':
+                        user[i][2] = "pengumpul"
+                        print("Jin telah berhasil diubah.")
+                    elif validasi == "N" or validasi == 'n':
+                        user[i][2] = user[i][2]
                 while True:
                     validasi = input(
                         "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
@@ -504,7 +520,9 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
     while True:
         prompt = input(
             "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
-        if prompt == 'y' or prompt == 'Y':
+        if prompt == 'y' or prompt == 'Y' or prompt == 'Y':
             save(user, banyakDataUser, candi, banyakDataCandi,
                  bahan_bangunan, banyakDataBahan)
-        exit()
+            exit()
+        elif prompt == 'n' or prompt == 'N':
+            exit()

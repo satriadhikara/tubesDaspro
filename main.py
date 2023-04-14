@@ -193,8 +193,25 @@ if os.path.exists(f"save/{args.folder}"):
                 bahan_bangunan = commands.batchkumpul(user, banyakData(user), bahan_bangunan)
             else:
                 print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso")
+            #batch bangun   
+        elif masukan == "batchbangun":
+            if sesi == []:
+                print(
+                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchbangun")
+            elif sesi[1] == "bandung_bondowoso":
+                bahan_bangunan = commands.batchbangun(user,banyakData(user), bahan_bangunan)
+            else:
+                print("Batch bangun hanya dapat diakses oleh akun Bandung Bondowoso")
         # F-09
-
+        elif masukan == "laporanjin":
+            if sesi == []:
+                print(
+                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan laporanjin")
+            elif sesi[1] == "bandung_bondowoso":
+                commands.laporanjin(user, banyakData(user), banyakData(candi), candi, bahan_bangunan)
+            else:
+                print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso")
+        
         # F-10
         elif masukan == "laporancandi":
             if sesi == []:

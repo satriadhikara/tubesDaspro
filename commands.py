@@ -218,6 +218,38 @@ def kumpul(bahan_bangunan):
     print(f"Jin menemukan {pasir} pasir, {batu} batu, dan {air} air.")
     return bahan_bangunan
 
+# F-08
+
+
+def batchkumpul(user, banyakData, bahan_bangunan):
+    banyakJin = 0
+    for i in range(banyakData):
+        if user[i][2] == "pengumpul" :
+            banyakJin += 1
+    
+    if banyakJin != 0 :
+        jumlahPasir  = 0
+        jumlahBatu = 0
+        jumlahAir = 0
+        j = 0
+        while j <= banyakJin :
+            pasir = randint(0, 5)
+            batu = randint(0, 5)
+            air = randint(0, 5)
+            jumlahPasir += pasir
+            jumlahBatu += batu
+            jumlahAir += air
+            j += 1   
+        print(f"Mengerahkan {banyakJin} jin untuk mengumpulkan bahan.")
+        print(f"Jin menemukan total {jumlahPasir} pasir , {jumlahBatu} batu , dan {jumlahAir} air.")
+        bahan_bangunan[1][2] += jumlahPasir
+        bahan_bangunan[2][2] += jumlahBatu
+        bahan_bangunan[3][2] += jumlahAir
+        return bahan_bangunan
+    
+    else :
+        print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
+
 # F-10
 
 
@@ -350,6 +382,30 @@ def save(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDat
             file.write("\n")
     print(f"Berhasil menyimpan data di folder {path}!")
     return
+
+# Bonus-Ganti Password
+
+
+def gantipassword(user, banyakData):
+    Username = input("Username: ")
+    Password = input("Password: ")
+    
+    for i in range(banyakData):
+        if Username == user[i][0]:
+            if Password == user[i][1]:
+                validasi = input("Apakah anda ingin mengganti password ? (Y/N): ")
+                if validasi == "Y" :
+                    newPass = input("Masukan password baru: ")
+                    user[i][1] = newPass
+                    user[i][0] = user[i][0]
+                    print(f"Password berhasil diubah")
+                    return user
+                else :
+                    print("Password tidak diubah")
+            else :
+                print("Password salah")
+    else :
+        print("Username tidak ditemukan")
 
 # F15 - Help
 

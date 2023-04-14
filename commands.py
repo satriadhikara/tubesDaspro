@@ -221,6 +221,7 @@ def kumpul(bahan_bangunan):
 # F-08
 
 
+#batch kumpul
 def batchkumpul(user, banyakData, bahan_bangunan):
     banyakJin = 0
     for i in range(banyakData):
@@ -249,6 +250,117 @@ def batchkumpul(user, banyakData, bahan_bangunan):
     
     else :
         print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
+     
+#batch bangun
+def batchbangun(user,banyakData, bahan_bangunan):
+    banyakJin = 0
+    for i in range(banyakData):
+        if user[i][2] == "pengumpul" :
+            banyakJin += 1
+            
+    if banyakJin != 0 :
+        jumlahPasir  = 0
+        jumlahBatu = 0
+        jumlahAir = 0
+        j = 0
+        while j <= banyakJin :
+            pasir = randint(0, 5)
+            batu = randint(0, 5)
+            air = randint(0, 5)
+            jumlahPasir += pasir
+            jumlahBatu += batu
+            jumlahAir += air
+            j += 1
+        cukup = 0
+        if bahan_bangunan[1][2] >= pasir:
+            cukup += 1
+        if bahan_bangunan[2][2] >= batu:
+            cukup += 1
+        if bahan_bangunan[3][2] >= air:
+            cukup += 1
+        if cukup == 3 :
+            print(f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
+            print(f"Jin berhasil membangun total {banyakJin} candi.")
+            bahan_bangunan[1][2] -= jumlahPasir
+            bahan_bangunan[2][2] -= jumlahBatu
+            bahan_bangunan[3][2] -= jumlahAir
+            return bahan_bangunan
+        else :
+            print(f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
+            kurangPasir = jumlahPasir - bahan_bangunan[1][2]
+            kurangBatu = jumlahBatu - bahan_bangunan[2][2]
+            kurangAir = jumlahAir - bahan_bangunan[3][2]
+            if kurangPasir <= 0 and kurangBatu <= 0:
+                print(f"Bangun gagal. Kurang {kurangAir} air.")
+            elif kurangPasir <= 0 and kurangAir <= 0:
+                print(f"Bangun gagal. Kurang {kurangBatu} batu.")
+            elif kurangBatu <= 0 and kurangAir <= 0:
+                print(f"Bangun gagal. Kurang {kurangPasir} pasir.")
+            elif kurangPasir <= 0:
+                print(f"Bangun gagal. Kurang {kurangBatu} batu , dan {kurangAir} air.")
+            elif kurangBatu <= 0:
+                print(f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangAir} air.")
+            elif kurangAir <= 0:
+                print(f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangBatu} batu.")
+            else :
+                print(f"Bangun gagal. Kurang {kurangPasir} pasri , {kurangBatu} batu , dan {kurangAir} air.")
+    else :
+        print("Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")        
+        
+# F-09
+
+
+def laporanjin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
+    total = 0
+    totalPengumpul = 0
+    totalPembangun = 0
+    for i in range(banyakDataUser) :
+        if user[i][2] == "pengumpul" :
+            totalPengumpul += 1
+        elif user[i][2] == "pembangun":
+            totalPembangun += 1
+        else :
+            totalPengumpul += 0
+            totalPembangun += 0
+    total = totalPembangun + totalPengumpul
+    
+    banyak = {}
+    for i in range(1, banyakDataCandi) :
+        if candi[i][1] in banyak :
+            banyak[candi[i][1]] += 1
+        else:
+            banyak[candi[i][1]] = 1
+    
+    jin = list(banyak.keys())
+    banyakcandi = list(banyak.values())
+    max_jenis = jin[0]
+    max_jumlah = banyakcandi[0]
+    min_jenis = jin[0]
+    min_jumlah = banyakcandi[0]
+
+    for i in range(1, len(jin)):
+        if banyakcandi[i] > max_jumlah:
+            max_jenis = jin[i]
+            max_jumlah = banyakcandi[i] 
+        if banyakcandi[i] < min_jumlah:
+            min_jenis = jin[i]
+            min_jumlah = banyakcandi[i]
+            
+    print(f"Total Jin: {total}") 
+    print(f"Total Jin Pengumpul: {totalPengumpul}")  
+    print(f"Total Jin Pembangun: {totalPembangun}")  
+    if max_jenis != None:
+        print(f"Jin Terajin: {max_jenis}") 
+    else:
+        print("Jin Termalas: -")    
+        
+    if min_jenis != None:
+        print(f"Jin Termalas: {min_jenis}")
+    else:
+        print("Jin Termalas: -")
+    print(f"Jumlah Pasir: {bahan_bangunan[1][2]} unit")
+    print(f"Jumlah Batu: {bahan_bangunan[2][2]} unit")
+    print(f"Jumlah Air: {bahan_bangunan[3][2]} unit")
 
 # F-10
 

@@ -5,11 +5,11 @@
 
 # Import module dan file commands
 import os
-import sys
-import math
+# import sys
+# import math
 import time
 import argparse
-import datetime
+# import datetime
 import commands
 
 # Matriks database
@@ -26,6 +26,7 @@ bahan_bangunan = [None for _ in range(5)]
 def getData(matriks, fileName):
     with open(f"save/{args.folder}/{fileName}.csv", "r") as file:
         contents = file.read()
+    # Tipe data "contents" itu string jadi boleh pake len
     contents += "\n"
     total = 0
     for i in range(len(contents)):
@@ -181,6 +182,10 @@ if os.path.exists(f"save/{args.folder}"):
             else:
                 print("Anda tidak mempunyai akses")
 
+        # @Jebe kurang ini
+        # F-08
+        # F-09
+
         # F-10
         elif masukan == "laporancandi":
             if sesi == []:
@@ -216,9 +221,6 @@ if os.path.exists(f"save/{args.folder}"):
         elif masukan == "exit":
             commands.exitProgram(aksesData(user), banyakData(user), aksesData(
                 candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
-         # elif masukan == "fungsi kalian"
-            # commands.fungsi kalian jangan lupa tambahin ()
-            # tulis fungsi kalian di file commands.py, kalau perlu parameter tinggal akses yang ada
         else:
             print("""Command tidak ditemukan
 Masukkan command “help” untuk daftar command yang dapat kamu panggil.""")

@@ -1,6 +1,5 @@
 # Commands
 import os
-import csv
 from random import randint
 
 # F-01

@@ -98,7 +98,7 @@ args = parser.parse_args()
 if os.path.exists(f"save/{args.folder}"):
     print("Loading...")
     time.sleep(0.5)
-    print("Selamat datang di program \"Manajerial Candi\"\nSilahkan masukkan username Anda")
+    print("Selamat datang di program \"Manajerial Candi\"\nSilahkan lakukan login")
     # Semua data csv ada di matriks user, candi, bahan_bangunan atau getData("nama matriks"). Tinggal dipakai
     getData(user, "user")
     getData(candi, "candi")
@@ -220,7 +220,8 @@ if os.path.exists(f"save/{args.folder}"):
             # commands.fungsi kalian jangan lupa tambahin ()
             # tulis fungsi kalian di file commands.py, kalau perlu parameter tinggal akses yang ada
         else:
-            # print()
+            print("""Command tidak ditemukan
+Masukkan command “help” untuk daftar command yang dapat kamu panggil.""")
             continue
 else:
     print(f"Folder “{args.folder}” tidak ditemukan")

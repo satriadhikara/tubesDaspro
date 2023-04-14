@@ -148,24 +148,24 @@ def ubahjin(user, banyakData):
     for i in range(banyakData):
         if user[i][0] == username:
             if user[i][2] == "pengumpul":
-                validasi = input(
-                    "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
-                if validasi == "Y":
-                    user[i][2] = "pembangun"
-                    print("Jin telah berhasil diubah.")
-                    return user
-                else:
-                    user[i][2] = user[i][2]
+                while True:
+                    validasi = input(
+                        "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
+                    if validasi == "Y" or validasi == 'y':
+                        user[i][2] = "pembangun"
+                        print("Jin telah berhasil diubah.")
+                    elif validasi == "N" or validasi == 'n':
+                        user[i][2] = user[i][2]
                     return user
             elif user[i][2] == "pembangun":
-                validasi = input(
-                    "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
-                if validasi == "Y":
-                    user[i][2] = "pengumpul"
-                    print("Jin telah berhasil diubah.")
-                    return user
-                else:
-                    user[i][2] = user[i][2]
+                while True:
+                    validasi = input(
+                        "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
+                    if validasi == "Y" or validasi == 'y':
+                        user[i][2] = "pengumpul"
+                        print("Jin telah berhasil diubah.")
+                    elif validasi == "N" or validasi == 'n':
+                        user[i][2] = user[i][2]
                     return user
     else:
         print("Tidak ada jin dengan username tersebut.")
@@ -374,7 +374,7 @@ def bantuan(akun):
 8. laporancandi
    Untuk mengambil laporan progress pembangunan candi
 9. save
-   Untuk menyimpan data
+   Untuk menyimpan data permainan
 10. exit
    Untuk keluar dari permainan""")
         # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
@@ -412,7 +412,7 @@ def bantuan(akun):
 3. ayamberkokok
    Untuk menyelesaikan permainan
 4. save
-   Untuk menyimpan data
+   Untuk menyimpan data permainan
 5. exit
    Untuk keluar dari permainan""")
         # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
@@ -437,7 +437,9 @@ def bantuan(akun):
    Untuk keluar dari akun yang digunakan sekarang
 2. kumpul
    Untuk mengumpulkan resource candi
-3. exit
+3. save
+   Untuk menyimpan data permainan
+4. exit
    Untuk keluar dari permainan""")
         # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
         # if (opsi == 1):
@@ -457,7 +459,9 @@ def bantuan(akun):
    Untuk keluar dari akun yang digunakan sekarang
 2. bangun
    Untuk membangun candi
-3. exit
+3. save
+   Untuk menyimpan data permainan
+4. exit
    Untuk keluar dari permainan""")
         # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
         # if (opsi == 1):
@@ -477,7 +481,9 @@ def bantuan(akun):
    Untuk masuk menggunakan akun
 2. load
    Untuk memuat file eksternal ke dalam permainan
-3. exit
+3. save
+   Untuk menyimpan data permainan
+4. exit
    Untuk keluar dari permainan""")
         # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
         # if (opsi == 1):
@@ -498,7 +504,7 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
     while True:
         prompt = input(
             "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
-        if prompt == 'y':
+        if prompt == 'y' or prompt == 'Y':
             save(user, banyakDataUser, candi, banyakDataCandi,
                  bahan_bangunan, banyakDataBahan)
         exit()

@@ -156,6 +156,7 @@ def ubahjin(user, banyakData):
                         print("Jin telah berhasil diubah.")
                     elif validasi == "N" or validasi == 'n':
                         user[i][2] = user[i][2]
+                    return user
             elif user[i][2] == "pembangun":
                 while True:
                     validasi = input(
@@ -165,6 +166,7 @@ def ubahjin(user, banyakData):
                         print("Jin telah berhasil diubah.")
                     elif validasi == "N" or validasi == 'n':
                         user[i][2] = user[i][2]
+                    return user
     else:
         print("Tidak ada jin dengan username tersebut.")
         return user

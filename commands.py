@@ -6,16 +6,16 @@ from random import randint
 
 
 def login(user, banyakData):
-    Username = str(input("Username: "))
-    Password = str(input("Password: "))
+    username = str(input("Username: "))
+    password = str(input("Password: "))
 
     for i in range(banyakData):
-        if Username == user[i][0]:
-            if Password == user[i][1]:
-                print(f"Selamat datang {Username}!")
+        if username == user[i][0]:
+            if password == user[i][1]:
+                print(f"Selamat datang {username}!")
                 print(
                     "Masukkan command “help” untuk daftar command yang dapat kamu panggil.")
-                return [Username, user[i][2]]
+                return [username, user[i][2]]
             else:
                 print("Password salah!")
                 return []
@@ -221,49 +221,53 @@ def kumpul(bahan_bangunan):
 # F-08
 
 
-#batch kumpul
+# batch kumpul
 def batchkumpul(user, banyakData, bahan_bangunan):
     banyakJin = 0
     for i in range(banyakData):
-        if user[i][2] == "pengumpul" :
+        if user[i][2] == "pengumpul":
             banyakJin += 1
-    
-    if banyakJin != 0 :
-        jumlahPasir  = 0
+
+    if banyakJin != 0:
+        jumlahPasir = 0
         jumlahBatu = 0
         jumlahAir = 0
         j = 0
-        while j <= banyakJin :
+        while j <= banyakJin:
             pasir = randint(0, 5)
             batu = randint(0, 5)
             air = randint(0, 5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
-            j += 1   
+            j += 1
         print(f"Mengerahkan {banyakJin} jin untuk mengumpulkan bahan.")
-        print(f"Jin menemukan total {jumlahPasir} pasir , {jumlahBatu} batu , dan {jumlahAir} air.")
+        print(
+            f"Jin menemukan total {jumlahPasir} pasir , {jumlahBatu} batu , dan {jumlahAir} air.")
         bahan_bangunan[1][2] += jumlahPasir
         bahan_bangunan[2][2] += jumlahBatu
         bahan_bangunan[3][2] += jumlahAir
         return bahan_bangunan
-    
-    else :
-        print("Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
-     
-#batch bangun
-def batchbangun(user,banyakData, bahan_bangunan):
+
+    else:
+        print(
+            "Kumpul gagal. Anda tidak punya jin pengumpul. Silahkan summon terlebih dahulu.")
+
+# batch bangun
+
+
+def batchbangun(user, banyakData, bahan_bangunan):
     banyakJin = 0
     for i in range(banyakData):
-        if user[i][2] == "pengumpul" :
+        if user[i][2] == "pengumpul":
             banyakJin += 1
-            
-    if banyakJin != 0 :
-        jumlahPasir  = 0
+
+    if banyakJin != 0:
+        jumlahPasir = 0
         jumlahBatu = 0
         jumlahAir = 0
         j = 0
-        while j <= banyakJin :
+        while j <= banyakJin:
             pasir = randint(0, 5)
             batu = randint(0, 5)
             air = randint(0, 5)
@@ -278,15 +282,17 @@ def batchbangun(user,banyakData, bahan_bangunan):
             cukup += 1
         if bahan_bangunan[3][2] >= air:
             cukup += 1
-        if cukup == 3 :
-            print(f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
+        if cukup == 3:
+            print(
+                f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
             print(f"Jin berhasil membangun total {banyakJin} candi.")
             bahan_bangunan[1][2] -= jumlahPasir
             bahan_bangunan[2][2] -= jumlahBatu
             bahan_bangunan[3][2] -= jumlahAir
             return bahan_bangunan
-        else :
-            print(f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
+        else:
+            print(
+                f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
             kurangPasir = jumlahPasir - bahan_bangunan[1][2]
             kurangBatu = jumlahBatu - bahan_bangunan[2][2]
             kurangAir = jumlahAir - bahan_bangunan[3][2]
@@ -297,16 +303,21 @@ def batchbangun(user,banyakData, bahan_bangunan):
             elif kurangBatu <= 0 and kurangAir <= 0:
                 print(f"Bangun gagal. Kurang {kurangPasir} pasir.")
             elif kurangPasir <= 0:
-                print(f"Bangun gagal. Kurang {kurangBatu} batu , dan {kurangAir} air.")
+                print(
+                    f"Bangun gagal. Kurang {kurangBatu} batu , dan {kurangAir} air.")
             elif kurangBatu <= 0:
-                print(f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangAir} air.")
+                print(
+                    f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangAir} air.")
             elif kurangAir <= 0:
-                print(f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangBatu} batu.")
-            else :
-                print(f"Bangun gagal. Kurang {kurangPasir} pasri , {kurangBatu} batu , dan {kurangAir} air.")
-    else :
-        print("Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")        
-        
+                print(
+                    f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangBatu} batu.")
+            else:
+                print(
+                    f"Bangun gagal. Kurang {kurangPasir} pasri , {kurangBatu} batu , dan {kurangAir} air.")
+    else:
+        print(
+            "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
+
 # F-09
 
 
@@ -314,23 +325,23 @@ def laporanjin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
     total = 0
     totalPengumpul = 0
     totalPembangun = 0
-    for i in range(banyakDataUser) :
-        if user[i][2] == "pengumpul" :
+    for i in range(banyakDataUser):
+        if user[i][2] == "pengumpul":
             totalPengumpul += 1
         elif user[i][2] == "pembangun":
             totalPembangun += 1
-        else :
+        else:
             totalPengumpul += 0
             totalPembangun += 0
     total = totalPembangun + totalPengumpul
-    
+
     banyak = {}
-    for i in range(1, banyakDataCandi) :
-        if candi[i][1] in banyak :
+    for i in range(1, banyakDataCandi):
+        if candi[i][1] in banyak:
             banyak[candi[i][1]] += 1
         else:
             banyak[candi[i][1]] = 1
-    
+
     jin = list(banyak.keys())
     banyakcandi = list(banyak.values())
     max_jenis = jin[0]
@@ -341,19 +352,19 @@ def laporanjin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
     for i in range(1, len(jin)):
         if banyakcandi[i] > max_jumlah:
             max_jenis = jin[i]
-            max_jumlah = banyakcandi[i] 
+            max_jumlah = banyakcandi[i]
         if banyakcandi[i] < min_jumlah:
             min_jenis = jin[i]
             min_jumlah = banyakcandi[i]
-            
-    print(f"Total Jin: {total}") 
-    print(f"Total Jin Pengumpul: {totalPengumpul}")  
-    print(f"Total Jin Pembangun: {totalPembangun}")  
+
+    print(f"Total Jin: {total}")
+    print(f"Total Jin Pengumpul: {totalPengumpul}")
+    print(f"Total Jin Pembangun: {totalPembangun}")
     if max_jenis != None:
-        print(f"Jin Terajin: {max_jenis}") 
+        print(f"Jin Terajin: {max_jenis}")
     else:
-        print("Jin Termalas: -")    
-        
+        print("Jin Termalas: -")
+
     if min_jenis != None:
         print(f"Jin Termalas: {min_jenis}")
     else:
@@ -495,29 +506,6 @@ def save(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDat
     print(f"Berhasil menyimpan data di folder {path}!")
     return
 
-# Bonus-Ganti Password
-
-
-def gantipassword(user, banyakData):
-    Username = input("Username: ")
-    Password = input("Password: ")
-    
-    for i in range(banyakData):
-        if Username == user[i][0]:
-            if Password == user[i][1]:
-                validasi = input("Apakah anda ingin mengganti password ? (Y/N): ")
-                if validasi == "Y" :
-                    newPass = input("Masukan password baru: ")
-                    user[i][1] = newPass
-                    user[i][0] = user[i][0]
-                    print(f"Password berhasil diubah")
-                    return user
-                else :
-                    print("Password tidak diubah")
-            else :
-                print("Password salah")
-    else :
-        print("Username tidak ditemukan")
 
 # F15 - Help
 
@@ -679,3 +667,28 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
             exit()
         elif prompt == 'n' or prompt == 'N':
             exit()
+
+# B-05
+
+
+def gantipassword(user, banyakData):
+    username = input("Username: ")
+    password = input("Password: ")
+
+    for i in range(banyakData):
+        if username == user[i][0]:
+            if password == user[i][1]:
+                validasi = input(
+                    "Apakah anda ingin mengganti password ? (Y/N): ")
+                if validasi == "Y":
+                    newPass = input("Masukan password baru: ")
+                    user[i][1] = newPass
+                    user[i][0] = user[i][0]
+                    print(f"Password berhasil diubah")
+                    return user
+                else:
+                    print("Password tidak diubah")
+            else:
+                print("Password salah")
+    else:
+        print("Username tidak ditemukan")

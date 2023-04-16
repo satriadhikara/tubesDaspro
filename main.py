@@ -1,7 +1,6 @@
 # Tubes Daspro
-# Cara ngerun tulis
+# Cara ngerun tulis:
 # python main.py <folder yg ada datanya misalnya folder test>
-# Bahan csv cuman contoh kalau mau diubah juga gapapa isinya asal sesuai template
 
 # Import module dan file commands
 import os
@@ -12,19 +11,13 @@ import argparse
 # import datetime
 import commands
 
-# Matriks database
-user = [None for _ in range(1000)]
-candi = [None for _ in range(1000)]
-bahan_bangunan = [None for _ in range(5)]
-
-
-# Fungsi - fungsi (jangan diapa2in)
+# Fungsi - fungsi untuk data
 
 # Masukin data csv ke matriks
 
 
-def getData(matriks, fileName):
-    with open(f"save/{args.folder}/{fileName}.csv", "r") as file:
+def getData(matriks, fileName, path):
+    with open(f"{path}/{fileName}.csv", "r") as file:
         contents = file.read()
     # Tipe data "contents" itu string jadi boleh pake len
     contents += "\n"
@@ -93,167 +86,191 @@ def banyakData(matriks):
     return i
 
 
-parser = argparse.ArgumentParser(description="")
-parser.add_argument("folder", type=str)
-args = parser.parse_args()
-if os.path.exists(f"save/{args.folder}"):
-    print("Loading...")
-    time.sleep(0.5)
-    print("Selamat datang di program \"Manajerial Candi\"\nSilahkan lakukan login")
-    # Semua data csv ada di matriks user, candi, bahan_bangunan atau getData("nama matriks"). Tinggal dipakai
-    getData(user, "user")
-    getData(candi, "candi")
-    getData(bahan_bangunan, "bahan_bangunan")
-    for i in range(1, 4):
-        bahan_bangunan[i][2] = int(bahan_bangunan[i][2])
-    for i in range(1, banyakData(candi)):
-        candi[i][2] = int(candi[i][2])
-        candi[i][3] = int(candi[i][3])
-        candi[i][4] = int(candi[i][4])
-    sesi = []
-    while True:
-        masukan = input(">>> ")
-        # F-01
-        if masukan == "login":
-            if sesi == []:
-                sesi = commands.login(aksesData(user), banyakData(user))
-            else:
-                print("Login gagal!")
-                print(
-                    f"Anda telah login dengan username {sesi[0]}, silahkan lakukan “logout” sebelum melakukan login kembali.")
-        # F-02
-        elif masukan == "logout":
-            if sesi == []:
-                print("Logout gagal!")
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout")
-            else:
-                print("Logout berhasil")
-                sesi = []
-        # F-03
-        elif masukan == "summonjin":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan summonjin")
-            elif sesi[1] == "bandung_bondowoso":
-                if (banyakData(user) - 3) >= 100:
-                    print(
-                        "Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
-                else:
-                    user = commands.summonjin(user, banyakData(user))
-            else:
-                print("Anda tidak mempunyai akses")
-        # F-04
-        elif masukan == "hapusjin":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan hapusjin")
-            elif sesi[1] == "bandung_bondowoso":
-                user, candi = commands.hapusjin(
-                    user, banyakData(user), candi, banyakData(candi))
-            else:
-                print("Anda tidak mempunyai akses")
-        # F-05
-        elif masukan == "ubahjin":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan ubahjin")
-            elif sesi[1] == "bandung_bondowoso":
-                user = commands.ubahjin(user, banyakData(user))
-            else:
-                print("Anda tidak mempunyai akses")
-        # F-06
-        elif masukan == "bangun":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan bangun")
-            elif sesi[1] == "pembangun":
-                candi = commands.bangun(
-                    candi, bahan_bangunan, banyakData(candi), sesi[0])
-            else:
-                print("Anda tidak mempunyai akses")
-        # F-07
-        elif masukan == "kumpul":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan kumpul")
-            elif sesi[1] == "pengumpul":
-                bahan_bangunan = commands.kumpul(bahan_bangunan)
-            else:
-                print("Anda tidak mempunyai akses")
+def main():
+    parser = argparse.ArgumentParser(description="")
+    parser.add_argument("folder", type=str, nargs="?")
+    args = parser.parse_args()
+    if args.folder == None:
+        print("Tidak ada nama folder yang diberikan!\nUsage: python main.py <nama_folder>")
+    else:
+        if os.path.exists(f"save/{args.folder}"):
+            # Matriks database
+            user = [None for _ in range(105)]
+            candi = [None for _ in range(105)]
+            bahan_bangunan = [None for _ in range(5)]
+            path = f"save/{args.folder}"
+            print("Loading...")
+            time.sleep(0.5)
+            print(
+                "Selamat datang di program \"Manajerial Candi\"\nSilahkan lakukan login")
+            # Semua data csv ada di matriks user, candi, bahan_bangunan atau getData("nama matriks").
+            getData(user, "user", path)
+            getData(candi, "candi", path)
+            getData(bahan_bangunan, "bahan_bangunan", path)
+            for i in range(1, 4):
+                bahan_bangunan[i][2] = int(bahan_bangunan[i][2])
+            for i in range(1, banyakData(candi)):
+                candi[i][2] = int(candi[i][2])
+                candi[i][3] = int(candi[i][3])
+                candi[i][4] = int(candi[i][4])
+            sesi = []
+            while True:
+                masukan = input(">>> ")
+                # F-01
+                if masukan == "login":
+                    if sesi == []:
+                        sesi = commands.login(
+                            aksesData(user), banyakData(user))
+                    else:
+                        print("Login gagal!")
+                        print(
+                            f"Anda telah login dengan username {sesi[0]}, silahkan lakukan “logout” sebelum melakukan login kembali.")
+                # F-02
+                elif masukan == "logout":
+                    if sesi == []:
+                        print("Logout gagal!")
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan logout")
+                    else:
+                        print("Logout berhasil")
+                        sesi = []
+                # F-03
+                elif masukan == "summonjin":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan summonjin")
+                    elif sesi[1] == "bandung_bondowoso":
+                        if (banyakData(user) - 3) >= 100:
+                            print(
+                                "Jumlah Jin telah maksimal! (100 jin). Bandung tidak dapat men-summon lebih dari itu")
+                        else:
+                            user = commands.summonjin(user, banyakData(user))
+                    else:
+                        print("Anda tidak mempunyai akses")
+                # F-04
+                elif masukan == "hapusjin":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan hapusjin")
+                    elif sesi[1] == "bandung_bondowoso":
+                        user, candi = commands.hapusjin(
+                            user, banyakData(user), candi, banyakData(candi))
+                    else:
+                        print("Anda tidak mempunyai akses")
+                # F-05
+                elif masukan == "ubahjin":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan ubahjin")
+                    elif sesi[1] == "bandung_bondowoso":
+                        user = commands.ubahjin(user, banyakData(user))
+                    else:
+                        print("Anda tidak mempunyai akses")
+                # F-06
+                elif masukan == "bangun":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan bangun")
+                    elif sesi[1] == "pembangun":
+                        candi = commands.bangun(
+                            candi, bahan_bangunan, banyakData(candi), sesi[0])
+                    else:
+                        print("Anda tidak mempunyai akses")
+                # F-07
+                elif masukan == "kumpul":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan kumpul")
+                    elif sesi[1] == "pengumpul":
+                        bahan_bangunan = commands.kumpul(bahan_bangunan)
+                    else:
+                        print("Anda tidak mempunyai akses")
 
-        # @Jebe kurang ini
-        # F-08
-            # batch kumpul
-        elif masukan == "batchkumpul":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchkumpul")
-            elif sesi[1] == "bandung_bondowoso":
-                bahan_bangunan = commands.batchkumpul(user, banyakData(user), bahan_bangunan)
-            else:
-                print("Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso")
-            #batch bangun   
-        elif masukan == "batchbangun":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchbangun")
-            elif sesi[1] == "bandung_bondowoso":
-                bahan_bangunan = commands.batchbangun(user,banyakData(user), bahan_bangunan)
-            else:
-                print("Batch bangun hanya dapat diakses oleh akun Bandung Bondowoso")
-        # F-09
-        elif masukan == "laporanjin":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan laporanjin")
-            elif sesi[1] == "bandung_bondowoso":
-                commands.laporanjin(user, banyakData(user), banyakData(candi), candi, bahan_bangunan)
-            else:
-                print("Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso")
-        
-        # F-10
-        elif masukan == "laporancandi":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan laporancandi")
-            elif sesi[1] == "bandung_bondowoso":
-                commands.laporanCandi(candi, banyakData(candi))
-            else:
-                print("Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso")
-        # F-11
-        elif masukan == "hancurkancandi":
-            if sesi == []:
-                print(
-                    "Anda belum login, silahkan login terlebih dahulu sebelum melakukan hancurkancandi")
-            elif sesi[1] == "roro_jonggrang":
-                candi = commands.hancurkanCandi(candi, banyakData(candi))
-            else:
-                print("Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang")
-        # F-12
-        elif masukan == "ayamberkokok":
-            commands.ayamberkokok(banyakData(candi) - 1)
-        # F-14
-        elif masukan == "save":
-            commands.save(aksesData(user), banyakData(user), aksesData(
-                candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
-        # Bonus
-        elif masukan == "gantipassword" :
-            user = commands.gantipassword(user, banyakData(user))
-        # F-15
-        elif masukan == "help":
-            if sesi == []:
-                commands.bantuan("")
-            else:
-                commands.bantuan(sesi[1])
-        # F-16
-        elif masukan == "exit":
-            commands.exitProgram(aksesData(user), banyakData(user), aksesData(
-                candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
+                # @Jebe kurang ini
+                # F-08
+                    # batch kumpul
+                elif masukan == "batchkumpul":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchkumpul")
+                    elif sesi[1] == "bandung_bondowoso":
+                        bahan_bangunan = commands.batchkumpul(
+                            user, banyakData(user), bahan_bangunan)
+                    else:
+                        print(
+                            "Batch kumpul hanya dapat diakses oleh akun Bandung Bondowoso")
+                    # batch bangun
+                elif masukan == "batchbangun":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan batchbangun")
+                    elif sesi[1] == "bandung_bondowoso":
+                        bahan_bangunan = commands.batchbangun(
+                            user, banyakData(user), bahan_bangunan)
+                    else:
+                        print(
+                            "Batch bangun hanya dapat diakses oleh akun Bandung Bondowoso")
+                # F-09
+                elif masukan == "laporanjin":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan laporanjin")
+                    elif sesi[1] == "bandung_bondowoso":
+                        commands.laporanjin(user, banyakData(
+                            user), banyakData(candi), candi, bahan_bangunan)
+                    else:
+                        print(
+                            "Laporan jin hanya dapat diakses oleh akun Bandung Bondowoso")
+
+                # F-10
+                elif masukan == "laporancandi":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan laporancandi")
+                    elif sesi[1] == "bandung_bondowoso":
+                        commands.laporanCandi(candi, banyakData(candi))
+                    else:
+                        print(
+                            "Laporan candi hanya dapat diakses oleh akun Bandung Bondowoso")
+                # F-11
+                elif masukan == "hancurkancandi":
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan hancurkancandi")
+                    elif sesi[1] == "roro_jonggrang":
+                        candi = commands.hancurkanCandi(
+                            candi, banyakData(candi))
+                    else:
+                        print(
+                            "Hancurkan candi hanya dapat diakses oleh akun Roro Jonggrang")
+                # F-12
+                elif masukan == "ayamberkokok":
+                    commands.ayamberkokok(banyakData(candi) - 1)
+                # F-14
+                elif masukan == "save":
+                    commands.save(aksesData(user), banyakData(user), aksesData(
+                        candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
+                # F-15
+                elif masukan == "help":
+                    if sesi == []:
+                        commands.bantuan("")
+                    else:
+                        commands.bantuan(sesi[1])
+                # F-16
+                elif masukan == "exit":
+                    commands.exitProgram(aksesData(user), banyakData(user), aksesData(
+                        candi), banyakData(candi), aksesData(bahan_bangunan), banyakData(bahan_bangunan))
+                # B-05 Ganti Password
+                elif masukan == "gantipassword":
+                    user = commands.gantipassword(user, banyakData(user))
+                else:
+                    print("""Command tidak ditemukan
+        Masukkan command “help” untuk daftar command yang dapat kamu panggil.""")
+                    continue
         else:
-            print("""Command tidak ditemukan
-Masukkan command “help” untuk daftar command yang dapat kamu panggil.""")
-            continue
-else:
-    print(f"Folder “{args.folder}” tidak ditemukan")
-    exit()
+            print(f"Folder “{args.folder}” tidak ditemukan")
+            exit()
+
+
+if __name__ == "__main__":
+    main()

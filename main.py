@@ -89,7 +89,7 @@ def main():
     parser.add_argument("folder", type=str, nargs="?")
     args = parser.parse_args()
     if args.folder == None:
-        print("Tidak ada nama folder yang diberikan!\nUsage: python main.py <nama_folder>\n\nNote: Pemain baru silahkan memakai folder \"new\"")
+        print("\nTidak ada nama folder yang diberikan!\nUsage: python main.py <nama_folder>\n\nNote: Pemain baru silahkan memakai folder \"new\"")
     else:
         if os.path.exists(f"save/{args.folder}"):
             # Matriks database
@@ -97,6 +97,7 @@ def main():
             candi = [None for _ in range(105)]
             bahan_bangunan = [None for _ in range(5)]
             path = f"save/{args.folder}"
+            print()
             print("Loading...")
             time.sleep(0.5)
             print(
@@ -128,7 +129,7 @@ def main():
                     else:
                         print("Login gagal!")
                         print(
-                            f"Anda telah login dengan username {sesi[0]}, silahkan lakukan “logout” sebelum melakukan login kembali.")
+                            f"Anda telah login dengan username {sesi[0]}, silahkan lakukan \"logout\" sebelum melakukan login kembali.")
                 # F-02
                 elif masukan == "logout":
                     if sesi == []:
@@ -282,10 +283,11 @@ def main():
                     user = commands.gantiPassword(user, banyakData(user))
                 else:
                     print("""Command tidak ditemukan
-        Masukkan command “help” untuk daftar command yang dapat kamu panggil.""")
+        Masukkan command \"help\" untuk daftar command yang dapat kamu panggil.""")
                     continue
         else:
-            print(f"Folder “{args.folder}” tidak ditemukan")
+            print()
+            print(f"Folder \"{args.folder}\" tidak ditemukan")
             exit()
 
 

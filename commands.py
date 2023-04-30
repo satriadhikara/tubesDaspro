@@ -1,6 +1,5 @@
 # Commands
 import os
-from random import randint
 
 # F-01
 
@@ -14,7 +13,7 @@ def login(user, banyakData):
             if password == user[i][1]:
                 print(f"Selamat datang {username}!")
                 print(
-                    "Masukkan command “help” untuk daftar command yang dapat kamu panggil.")
+                    "Masukkan command \"help” untuk daftar command yang dapat kamu panggil.")
                 return [username, user[i][2]]
             else:
                 print("Password salah!")
@@ -30,6 +29,7 @@ def summonJin(user, banyakData):
     print("Jenis jin yang dapat dipanggil:")
     print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
     print(" (2) Pembangun - bertugas membangun candi")
+    print()
     jj = input("Masukan nomor jenis jin yang dipanggil: ")
 
     if jj == '1':
@@ -56,7 +56,7 @@ def summonJin(user, banyakData):
                         print("Menyerahkan sesajen...")
                         print("Membacakan mantra...")
                         print()
-                        print("Jin {username} berhasil dipanggil!")
+                        print(f"Jin {username} berhasil dipanggil!")
                         return user
             else:
                 print("Password panjangnya harus 5-25 karakter!")
@@ -98,7 +98,7 @@ def summonJin(user, banyakData):
             return user
     else:
         # Diluar jenis jin
-        print(f"Tidak ada jenis jin bernomor '{jj}'")
+        print(f"Tidak ada jenis jin bernomor \"{jj}\"")
         return user
 
 # F04
@@ -121,7 +121,8 @@ def hapusCandi(username, candi, banyakData):
 def hapusJin(user, banyakDataUser, candi, banyakDataCandi):
     username = input("Masukan username jin : ")
     while True:
-        validasi = input(f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
+        validasi = input(
+            f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
         if validasi == 'Y' or validasi == 'y':
             for i in range(banyakDataUser):
                 if user[i][0] == username:
@@ -146,12 +147,13 @@ def hapusJin(user, banyakDataUser, candi, banyakDataCandi):
 
 def ubahJin(user, banyakData):
     username = input("Masukan username jin : ")
+    print()
     for i in range(banyakData):
         if user[i][0] == username:
             if user[i][2] == "pengumpul":
                 while True:
                     validasi = input(
-                        "Jin ini bertipe “Pengumpul”. Yakin ingin mengubah ke tipe “Pembangun” (Y/N)?")
+                        "Jin ini bertipe \"Pengumpul”. Yakin ingin mengubah ke tipe \"Pembangun\" (Y/N)? ")
                     if validasi == "Y" or validasi == 'y':
                         user[i][2] = "pembangun"
                         print("Jin telah berhasil diubah.")
@@ -162,7 +164,7 @@ def ubahJin(user, banyakData):
             elif user[i][2] == "pembangun":
                 while True:
                     validasi = input(
-                        "Jin ini bertipe “Pembangun”. Yakin ingin mengubah ke tipe “Pengumpul” (Y/N)?")
+                        "Jin ini bertipe \"Pembangun”. Yakin ingin mengubah ke tipe \"Pengumpul” (Y/N)? ")
                     if validasi == "Y" or validasi == 'y':
                         user[i][2] = "pengumpul"
                         print("Jin telah berhasil diubah.")
@@ -179,9 +181,9 @@ def ubahJin(user, banyakData):
 
 def bangun(candi, bahan_bangunan, banyakDataCandi, username):
     cukup = 0
-    pasir = randNumber(1,5)
-    batu = randNumber(1,5)
-    air = randNumber(1,5)
+    pasir = randNumber(1, 5)
+    batu = randNumber(1, 5)
+    air = randNumber(1, 5)
     maks = 0
     for i in range(1, banyakDataCandi):
         if maks < int(candi[i][0]):
@@ -212,9 +214,9 @@ def bangun(candi, bahan_bangunan, banyakDataCandi, username):
 
 
 def kumpul(bahan_bangunan):
-    pasir = randNumber(0,5)
-    batu = randNumber(0,5)
-    air = randNumber(0,5)
+    pasir = randNumber(0, 5)
+    batu = randNumber(0, 5)
+    air = randNumber(0, 5)
     bahan_bangunan[1][2] += pasir
     bahan_bangunan[2][2] += batu
     bahan_bangunan[3][2] += air
@@ -237,9 +239,9 @@ def batchKumpul(user, banyakData, bahan_bangunan):
         jumlahAir = 0
         j = 0
         while j <= banyakJin:
-            pasir = randNumber(0,5)
-            batu = randNumber(0,5)
-            air = randNumber(0,5)
+            pasir = randNumber(0, 5)
+            batu = randNumber(0, 5)
+            air = randNumber(0, 5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
@@ -275,9 +277,9 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
         jumlahBatu = 0
         jumlahAir = 0
         for i in range(banyakJin):
-            pasir = randNumber(1,5)
-            batu = randNumber(1,5)
-            air = randNumber(1,5)
+            pasir = randNumber(1, 5)
+            batu = randNumber(1, 5)
+            air = randNumber(1, 5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
@@ -291,19 +293,20 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
             cukup += 1
         if cukup == 3:
             jumlah = 100 - (banyakDataCandi - 1) - banyakJin
-            maks = 0
-            for i in range(1, banyakDataCandi):
-                if maks < candi[i][0]:
-                    maks = candi[i][0]
-            for i in range(banyakJin):
-                candi[banyakDataCandi + i] = [maks + 1 + i, jin[i],
-                                              candiBaru[i][0], candiBaru[i][1], candiBaru[i][2]]
+            if jumlah > 0:
+                maks = 0
+                for i in range(1, banyakDataCandi):
+                    if maks < candi[i][0]:
+                        maks = candi[i][0]
+                for i in range(banyakJin):
+                    candi[banyakDataCandi + i] = [maks + 1 + i, jin[i],
+                                                  candiBaru[i][0], candiBaru[i][1], candiBaru[i][2]]
+                bahan_bangunan[1][2] -= jumlahPasir
+                bahan_bangunan[2][2] -= jumlahBatu
+                bahan_bangunan[3][2] -= jumlahAir
             print(
                 f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
             print(f"Jin berhasil membangun total {banyakJin} candi.")
-            bahan_bangunan[1][2] -= jumlahPasir
-            bahan_bangunan[2][2] -= jumlahBatu
-            bahan_bangunan[3][2] -= jumlahAir
             return (candi, bahan_bangunan)
         else:
             print(
@@ -329,6 +332,7 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
             else:
                 print(
                     f"Bangun gagal. Kurang {kurangPasir} pasir , {kurangBatu} batu , dan {kurangAir} air.")
+            return (candi, bahan_bangunan)
     else:
         print(
             "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
@@ -356,16 +360,25 @@ def laporanJin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
                 break
         banyak[indeksUser] += 1
         ada = True
-    maks = min = banyak[3]
-    maksJin = minJin = user[3][0]
-    for i in range(3, banyakDataUser):
-        if banyak[i] > maks:
-            maks = banyak[i]
-            maksJin = user[i][0]
-        if banyak[i] < min:
-            min = banyak[i]
-            minJin = user[i][0]
-
+    if ada == True:
+        maks = min = banyak[3]
+        maksJin = minJin = user[3][0]
+        for i in range(3, banyakDataUser):
+            if banyak[i] == maks:
+                if maksJin > user[i][0]:
+                    maks = banyak[i]
+                    maksJin = user[i][0]
+            elif banyak[i] > maks:
+                maks = banyak[i]
+                maksJin = user[i][0]
+            if banyak[i] == min:
+                if minJin < user[i][0]:
+                    min = banyak[i]
+                    minJin = user[i][0]
+            elif banyak[i] < min:
+                min = banyak[i]
+                minJin = user[i][0]
+    print()
     print(f"Total Jin: {total}")
     print(f"Total Jin Pengumpul: {totalPengumpul}")
     print(f"Total Jin Pembangun: {totalPembangun}")
@@ -387,6 +400,7 @@ def hargaCandi(candiRow):
 
 
 def laporanCandi(candi, banyakData):
+    print()
     totalPasir = 0
     totalBatu = 0
     totalAir = 0
@@ -542,7 +556,7 @@ def bantuan(akun):
 9. save
    Untuk menyimpan data permainan
 10. exit
-   Untuk keluar dari permainan""")
+   Untuk keluar dari program dan kembali ke terminal""")
 
     elif akun == "roro_jonggrang":
         print(f"""
@@ -556,7 +570,7 @@ def bantuan(akun):
 4. save
    Untuk menyimpan data permainan
 5. exit
-   Untuk keluar dari permainan""")
+   Untuk keluar dari program dan kembali ke terminal""")
 
     elif akun == "pengumpul":
         print(f"""
@@ -568,7 +582,7 @@ def bantuan(akun):
 3. save
    Untuk menyimpan data permainan
 4. exit
-   Untuk keluar dari permainan""")
+   Untuk keluar dari program dan kembali ke terminal""")
 
     elif akun == "pembangun":
         print(f"""
@@ -580,19 +594,17 @@ def bantuan(akun):
 3. save
    Untuk menyimpan data permainan
 4. exit
-   Untuk keluar dari permainan""")
+   Untuk keluar dari program dan kembali ke terminal""")
 
     else:  # Pemain belum login
         print(f"""
 =========== HELP ===========
 1. login
    Untuk masuk menggunakan akun
-2. load
-   Untuk memuat file eksternal ke dalam permainan
-3. save
+2. save
    Untuk menyimpan data permainan
-4. exit
-   Untuk keluar dari permainan""")
+3. exit
+   Untuk keluar dari program dan kembali ke terminal""")
 
 # F-16
 
@@ -612,25 +624,28 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
 # B-01
 
 
-def lcg(seed: int = 177013, a: int = 1103515245, c: int = 12345, m: int = 2**31):      
-# Kalo 'seed' terserah (JoJo ending true ending) 'a', 'c', 'm' tersebut banyak digunakan karena panjang setiap periode dari loop yang sangat panjang                                                                        
+def lcg(seed: int = 177013, a: int = 1103515245, c: int = 12345, m: int = 2**31):
+    # Kalo 'seed' terserah (JoJo ending true ending) 'a', 'c', 'm' tersebut banyak digunakan karena panjang setiap periode dari loop yang sangat panjang
     while True:
-        seed = (a * seed + c) % m  
+        seed = (a * seed + c) % m
         yield seed / m
 # Membuat generator yang memuat nilai 0 sampai 1 dalam float sehingga menggunakan 'yield'
 
-def rounding(x: float):                                     
-# Karena generator float dan jika diubah menjadi integer terjadi floor division
-# Fungsinya agar nanti bilangan float dibulatkan ke bilangan bulat terdekat
+
+def rounding(x: float):
+    # Karena generator float dan jika diubah menjadi integer terjadi floor division
+    # Fungsinya agar nanti bilangan float dibulatkan ke bilangan bulat terdekat
     temp = int(x)
     if x % 1 < 0.5:
         return temp
     else:
         return temp + 1
-    
+
+
 def randNumber(minimum: int, maximum: int):
-# randint dengan nilai minimum dan maximum
+    # randint dengan nilai minimum dan maximum
     return rounding(next(generator) * (maximum - minimum) + minimum)
+
 
 generator = lcg()
 

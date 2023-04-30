@@ -25,7 +25,7 @@ def login(user, banyakData):
 # F03
 
 
-def summonjin(user, banyakData):
+def summonJin(user, banyakData):
     # Input Jenis Jin
     print("Jenis jin yang dapat dipanggil:")
     print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
@@ -116,7 +116,7 @@ def hapusCandi(username, candi, banyakData):
         return candi
 
 
-def hapusjin(user, banyakDataUser, candi, banyakDataCandi):
+def hapusJin(user, banyakDataUser, candi, banyakDataCandi):
     username = input("Masukan username jin : ")
     validasi = input(
         f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
@@ -142,7 +142,7 @@ def hapusjin(user, banyakDataUser, candi, banyakDataCandi):
 # F05
 
 
-def ubahjin(user, banyakData):
+def ubahJin(user, banyakData):
     username = input("Masukan username jin : ")
     for i in range(banyakData):
         if user[i][0] == username:
@@ -175,15 +175,15 @@ def ubahjin(user, banyakData):
 # F-06
 
 
-def bangun(candi, bahan_bangunan, banyakDataCandi, user):
+def bangun(candi, bahan_bangunan, banyakDataCandi, username):
     cukup = 0
     pasir = randint(1, 5)
     batu = randint(1, 5)
     air = randint(1, 5)
     maks = 0
     for i in range(1, banyakDataCandi):
-        if maks < candi[i][0]:
-            maks = candi[i][0]
+        if maks < int(candi[i][0]):
+            maks = int(candi[i][0])
     if bahan_bangunan[1][2] >= pasir:
         cukup += 1
     if bahan_bangunan[2][2] >= batu:
@@ -194,16 +194,17 @@ def bangun(candi, bahan_bangunan, banyakDataCandi, user):
         jumlah = 100 - (banyakDataCandi - 1)
         if jumlah != 0:
             jumlah -= 1
-            candi[banyakDataCandi] = [maks + 1, user, pasir, batu, air]
+            candi[banyakDataCandi] = [maks + 1, username, pasir, batu, air]
             bahan_bangunan[1][2] -= pasir
             bahan_bangunan[2][2] -= batu
             bahan_bangunan[3][2] -= air
         print("Candi berhasil dibangun")
         print(f"Sisa candi yang perlu dibangun: {jumlah}.")
-        return candi
+        return candi, bahan_bangunan
     else:
         print("Bahan bangunan tidak mencukupi.")
         print("Candi tidak bisa dibangun!")
+        return
 
 # F-07
 
@@ -222,7 +223,7 @@ def kumpul(bahan_bangunan):
 
 
 # batch kumpul
-def batchkumpul(user, banyakData, bahan_bangunan):
+def batchKumpul(user, banyakData, bahan_bangunan):
     banyakJin = 0
     for i in range(banyakData):
         if user[i][2] == "pengumpul":
@@ -256,40 +257,52 @@ def batchkumpul(user, banyakData, bahan_bangunan):
 # batch bangun
 
 
-def batchbangun(user, banyakData, bahan_bangunan):
+def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
     banyakJin = 0
-    for i in range(banyakData):
-        if user[i][2] == "pengumpul":
+    for i in range(banyakDataUser):
+        if user[i][2] == "pembangun":
             banyakJin += 1
-
+    print(banyakJin)
+    jin = [None for _ in range(banyakJin)]
+    for i in range(banyakJin):
+        if user[i + 3][2] == "pembangun":
+            jin[i] = user[3 + i][0]
+    candiBaru = [None for _ in range(banyakJin)]
     if banyakJin != 0:
         jumlahPasir = 0
         jumlahBatu = 0
         jumlahAir = 0
-        j = 0
-        while j <= banyakJin:
-            pasir = randint(0, 5)
-            batu = randint(0, 5)
-            air = randint(0, 5)
+        for i in range(banyakJin):
+            pasir = randint(1, 5)
+            batu = randint(1, 5)
+            air = randint(1, 5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
-            j += 1
+            candiBaru[i] = [pasir, batu, air]
         cukup = 0
-        if bahan_bangunan[1][2] >= pasir:
+        if bahan_bangunan[1][2] >= jumlahPasir:
             cukup += 1
-        if bahan_bangunan[2][2] >= batu:
+        if bahan_bangunan[2][2] >= jumlahBatu:
             cukup += 1
-        if bahan_bangunan[3][2] >= air:
+        if bahan_bangunan[3][2] >= jumlahAir:
             cukup += 1
         if cukup == 3:
+            jumlah = 100 - (banyakDataCandi - 1) - banyakJin
+            maks = 0
+            for i in range(1, banyakDataCandi):
+                if maks < candi[i][0]:
+                    maks = candi[i][0]
+            for i in range(banyakJin):
+                candi[banyakDataCandi + i] = [maks + 1 + i, jin[i],
+                                              candiBaru[i][0], candiBaru[i][1], candiBaru[i][2]]
             print(
                 f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
             print(f"Jin berhasil membangun total {banyakJin} candi.")
             bahan_bangunan[1][2] -= jumlahPasir
             bahan_bangunan[2][2] -= jumlahBatu
             bahan_bangunan[3][2] -= jumlahAir
-            return bahan_bangunan
+            return (candi, bahan_bangunan)
         else:
             print(
                 f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
@@ -313,7 +326,7 @@ def batchbangun(user, banyakData, bahan_bangunan):
                     f"Bangun gagal. Kurang {kurangPasir} pasir , dan {kurangBatu} batu.")
             else:
                 print(
-                    f"Bangun gagal. Kurang {kurangPasir} pasri , {kurangBatu} batu , dan {kurangAir} air.")
+                    f"Bangun gagal. Kurang {kurangPasir} pasir , {kurangBatu} batu , dan {kurangAir} air.")
     else:
         print(
             "Bangun gagal. Anda tidak punya jin pembangun. Silahkan summon terlebih dahulu.")
@@ -321,7 +334,7 @@ def batchbangun(user, banyakData, bahan_bangunan):
 # F-09
 
 
-def laporanjin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
+def laporanJin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
     total = 0
     totalPengumpul = 0
     totalPembangun = 0
@@ -330,44 +343,35 @@ def laporanjin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
             totalPengumpul += 1
         elif user[i][2] == "pembangun":
             totalPembangun += 1
-        else:
-            totalPengumpul += 0
-            totalPembangun += 0
     total = totalPembangun + totalPengumpul
 
-    banyak = {}
+    ada = False
+    banyak = [0 for _ in range(banyakDataUser)]
     for i in range(1, banyakDataCandi):
-        if candi[i][1] in banyak:
-            banyak[candi[i][1]] += 1
-        else:
-            banyak[candi[i][1]] = 1
-
-    jin = list(banyak.keys())
-    banyakcandi = list(banyak.values())
-    max_jenis = jin[0]
-    max_jumlah = banyakcandi[0]
-    min_jenis = jin[0]
-    min_jumlah = banyakcandi[0]
-
-    for i in range(1, len(jin)):
-        if banyakcandi[i] > max_jumlah:
-            max_jenis = jin[i]
-            max_jumlah = banyakcandi[i]
-        if banyakcandi[i] < min_jumlah:
-            min_jenis = jin[i]
-            min_jumlah = banyakcandi[i]
+        for j in range(banyakDataUser):
+            if candi[i][1] == user[j][0]:
+                indeksUser = j
+                break
+        banyak[indeksUser] += 1
+        ada = True
+    maks = min = banyak[3]
+    maksJin = minJin = user[3][0]
+    for i in range(3, banyakDataUser):
+        if banyak[i] > maks:
+            maks = banyak[i]
+            maksJin = user[i][0]
+        if banyak[i] < min:
+            min = banyak[i]
+            minJin = user[i][0]
 
     print(f"Total Jin: {total}")
     print(f"Total Jin Pengumpul: {totalPengumpul}")
     print(f"Total Jin Pembangun: {totalPembangun}")
-    if max_jenis != None:
-        print(f"Jin Terajin: {max_jenis}")
+    if ada == True:
+        print(f"Jin Terajin: {maksJin}")
+        print(f"Jin Termalas: {minJin}")
     else:
-        print("Jin Termalas: -")
-
-    if min_jenis != None:
-        print(f"Jin Termalas: {min_jenis}")
-    else:
+        print("Jin Terajin: -")
         print("Jin Termalas: -")
     print(f"Jumlah Pasir: {bahan_bangunan[1][2]} unit")
     print(f"Jumlah Batu: {bahan_bangunan[2][2]} unit")
@@ -438,7 +442,7 @@ def hancurkanCandi(candi, banyakData):
 # F12 - Ayam Berkokok
 
 
-def ayamberkokok(totalcandi):
+def ayamBerkokok(totalcandi):
     print()
     print("Kukuruyuk.. Kukuruyuk..")
     print()
@@ -488,21 +492,24 @@ def save(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDat
                 file.write(str(user[i][j]))
                 if j != 2:
                     file.write(";")
-            file.write("\n")
+            if i != banyakDataUser - 1:
+                file.write("\n")
     with open(f'{path}/candi.csv', 'w', newline='') as file:
         for i in range(banyakDataCandi):
             for j in range(5):
                 file.write(str(candi[i][j]))
                 if j != 4:
                     file.write(";")
-            file.write("\n")
+            if i != banyakDataCandi - 1:
+                file.write("\n")
     with open(f'{path}/bahan_bangunan.csv', 'w', newline='') as file:
         for i in range(banyakDataBahan):
             for j in range(3):
                 file.write(str(bahan_bangunan[i][j]))
                 if j != 2:
                     file.write(";")
-            file.write("\n")
+            if i != banyakDataBahan - 1:
+                file.write("\n")
     print(f"Berhasil menyimpan data di folder {path}!")
     return
 
@@ -534,30 +541,6 @@ def bantuan(akun):
    Untuk menyimpan data permainan
 10. exit
    Untuk keluar dari permainan""")
-        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-        # if (opsi == 1):
-        #     logout()
-        # elif (opsi == 2):
-        #     summonjin()
-        # elif (opsi == 3):
-        #     hapusjin()
-        # elif (opsi == 4):
-        #     ubahjin()
-        # elif (opsi == 5):
-        #     batchkumpul()
-        # elif (opsi == 6):
-        #     batchbangun()
-        # elif (opsi == 7):
-        #     laporanjin()
-        # elif (opsi == 8):
-        #     laporancandi()
-        # elif (opsi == 9):
-        #     save()
-        # elif (opsi == 10):
-        #     keluar()
-        # else:  # Opsi tidak valid
-        #     print("Opsi anda tidak valid")
-        #     bantuan()
 
     elif akun == "roro_jonggrang":
         print(f"""
@@ -572,20 +555,6 @@ def bantuan(akun):
    Untuk menyimpan data permainan
 5. exit
    Untuk keluar dari permainan""")
-        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-        # if (opsi == 1):
-        #     logout()
-        # elif (opsi == 2):
-        #     hancurkancandi()
-        # elif (opsi == 3):
-        #     ayamberkokok()
-        # elif (opsi == 4):
-        #     save()
-        # elif (opsi == 5):
-        #     keluar()
-        # else:  # Opsi tidak valid
-        #     print("Opsi anda tidak valid")
-        #     bantuan()
 
     elif akun == "pengumpul":
         print(f"""
@@ -598,16 +567,6 @@ def bantuan(akun):
    Untuk menyimpan data permainan
 4. exit
    Untuk keluar dari permainan""")
-        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-        # if (opsi == 1):
-        #     logout()
-        # elif (opsi == 2):
-        #     kumpul()
-        # elif (opsi == 3):
-        #     keluar()
-        # else:  # Opsi tidak valid
-        #     print("Opsi anda tidak valid")
-        #     bantuan()
 
     elif akun == "pembangun":
         print(f"""
@@ -620,16 +579,6 @@ def bantuan(akun):
    Untuk menyimpan data permainan
 4. exit
    Untuk keluar dari permainan""")
-        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-        # if (opsi == 1):
-        #     logout()
-        # elif (opsi == 2):
-        #     bangun()
-        # elif (opsi == 3):
-        #     keluar()
-        # else:  # Opsi tidak valid
-        #     print("Opsi anda tidak valid")
-        #     bantuan()
 
     else:  # Pemain belum login
         print(f"""
@@ -642,17 +591,6 @@ def bantuan(akun):
    Untuk menyimpan data permainan
 4. exit
    Untuk keluar dari permainan""")
-        # opsi = int(input("Pilih nomor opsi yang akan dilakukan: "))
-        # if (opsi == 1):
-        #     login()
-        # elif (opsi == 2):
-        #     load()
-        # elif (opsi == 3):
-        #     keluar()
-        # else:  # Opsi tidak valid
-        #     print("Opsi anda tidak valid")
-        #     bantuan()
-
 
 # F-16
 
@@ -671,7 +609,7 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
 # B-05
 
 
-def gantipassword(user, banyakData):
+def gantiPassword(user, banyakData):
     username = input("Username: ")
     password = input("Password: ")
 

@@ -30,9 +30,9 @@ def summonJin(user, banyakData):
     print("Jenis jin yang dapat dipanggil:")
     print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
     print(" (2) Pembangun - bertugas membangun candi")
-    jj = int(input("Masukan nomor jenis jin yang dipanggil: "))
+    jj = input("Masukan nomor jenis jin yang dipanggil: ")
 
-    if jj == 1:
+    if jj == '1':
         print('Memilih jin "Pengumpul".')
         # Input username jin pengumpul dan password
         username = input("Masukan username jin: ")
@@ -56,14 +56,15 @@ def summonJin(user, banyakData):
                         print("Menyerahkan sesajen...")
                         print("Membacakan mantra...")
                         print()
-                        print("Jin", username, "berhasil dipanggil!")
+                        print("Jin {username} berhasil dipanggil!")
                         return user
             else:
                 print("Password panjangnya harus 5-25 karakter!")
+                return user
         else:
             print("Username sudah digunakan.")
             return user
-    elif jj == 2:
+    elif jj == '2':
         print('Memilih jin "Pembangun". ')
         # Input username Jin Pembangun dan password
         username = input("Masukan username jin: ")
@@ -91,12 +92,13 @@ def summonJin(user, banyakData):
                         return user
             else:
                 print("Password panjangnya harus 5-25 karakter!")
+                return user
         else:
             print("Username sudah digunakan.")
             return user
     else:
         # Diluar jenis jin
-        print("Tidak ada jenis jin bernomor", "'" + str(jj) + "'")
+        print(f"Tidak ada jenis jin bernomor '{jj}'")
         return user
 
 # F04
@@ -118,26 +120,26 @@ def hapusCandi(username, candi, banyakData):
 
 def hapusJin(user, banyakDataUser, candi, banyakDataCandi):
     username = input("Masukan username jin : ")
-    validasi = input(
-        f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
-    if validasi == 'Y':
-        for i in range(banyakDataUser):
-            if user[i][0] == username:
-                candi = hapusCandi(username, candi, banyakDataCandi)
-                if i == (banyakDataUser - 1):
-                    user[i] = None
-                elif i != (banyakDataUser - 1):
-                    for j in range(i, banyakDataUser - 1):
-                        user[j] = user[j + 1]
-                    user[banyakDataUser - 1] = None
-                print("Jin telah berhasil dihapus dari alam gaib.")
+    while True:
+        validasi = input(f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
+        if validasi == 'Y' or validasi == 'y':
+            for i in range(banyakDataUser):
+                if user[i][0] == username:
+                    candi = hapusCandi(username, candi, banyakDataCandi)
+                    if i == (banyakDataUser - 1):
+                        user[i] = None
+                    elif i != (banyakDataUser - 1):
+                        for j in range(i, banyakDataUser - 1):
+                            user[j] = user[j + 1]
+                        user[banyakDataUser - 1] = None
+                    print("Jin telah berhasil dihapus dari alam gaib.")
+                    return (user, candi)
+            else:
+                print("Tidak ada jin dengan username tersebut.")
                 return (user, candi)
-        else:
-            print("Tidak ada jin dengan username tersebut.")
+        elif validasi == 'N' or validasi == 'n':
+            print("Jin tetap berada di alam gaib.")
             return (user, candi)
-    else:
-        print("Jin tetap berada di alam gaib.")
-        return (user, candi)
 
 # F05
 
@@ -177,9 +179,9 @@ def ubahJin(user, banyakData):
 
 def bangun(candi, bahan_bangunan, banyakDataCandi, username):
     cukup = 0
-    pasir = randint(1, 5)
-    batu = randint(1, 5)
-    air = randint(1, 5)
+    pasir = randNumber(1,5)
+    batu = randNumber(1,5)
+    air = randNumber(1,5)
     maks = 0
     for i in range(1, banyakDataCandi):
         if maks < int(candi[i][0]):
@@ -204,15 +206,15 @@ def bangun(candi, bahan_bangunan, banyakDataCandi, username):
     else:
         print("Bahan bangunan tidak mencukupi.")
         print("Candi tidak bisa dibangun!")
-        return
+        return candi, bahan_bangunan
 
 # F-07
 
 
 def kumpul(bahan_bangunan):
-    pasir = randint(0, 5)
-    batu = randint(0, 5)
-    air = randint(0, 5)
+    pasir = randNumber(0,5)
+    batu = randNumber(0,5)
+    air = randNumber(0,5)
     bahan_bangunan[1][2] += pasir
     bahan_bangunan[2][2] += batu
     bahan_bangunan[3][2] += air
@@ -235,9 +237,9 @@ def batchKumpul(user, banyakData, bahan_bangunan):
         jumlahAir = 0
         j = 0
         while j <= banyakJin:
-            pasir = randint(0, 5)
-            batu = randint(0, 5)
-            air = randint(0, 5)
+            pasir = randNumber(0,5)
+            batu = randNumber(0,5)
+            air = randNumber(0,5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
@@ -273,9 +275,9 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
         jumlahBatu = 0
         jumlahAir = 0
         for i in range(banyakJin):
-            pasir = randint(1, 5)
-            batu = randint(1, 5)
-            air = randint(1, 5)
+            pasir = randNumber(1,5)
+            batu = randNumber(1,5)
+            air = randNumber(1,5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
@@ -599,12 +601,39 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
     while True:
         prompt = input(
             "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
-        if prompt == 'y' or prompt == 'Y' or prompt == 'Y':
+        if prompt == 'y' or prompt == 'Y':
             save(user, banyakDataUser, candi, banyakDataCandi,
                  bahan_bangunan, banyakDataBahan)
             exit()
         elif prompt == 'n' or prompt == 'N':
             exit()
+
+
+# B-01
+
+
+def lcg(seed: int = 177013, a: int = 1103515245, c: int = 12345, m: int = 2**31):      
+# Kalo 'seed' terserah (JoJo ending true ending) 'a', 'c', 'm' tersebut banyak digunakan karena panjang setiap periode dari loop yang sangat panjang                                                                        
+    while True:
+        seed = (a * seed + c) % m  
+        yield seed / m
+# Membuat generator yang memuat nilai 0 sampai 1 dalam float sehingga menggunakan 'yield'
+
+def rounding(x: float):                                     
+# Karena generator float dan jika diubah menjadi integer terjadi floor division
+# Fungsinya agar nanti bilangan float dibulatkan ke bilangan bulat terdekat
+    temp = int(x)
+    if x % 1 < 0.5:
+        return temp
+    else:
+        return temp + 1
+    
+def randNumber(minimum: int, maximum: int):
+# randint dengan nilai minimum dan maximum
+    return rounding(next(generator) * (maximum - minimum) + minimum)
+
+generator = lcg()
+
 
 # B-05
 

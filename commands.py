@@ -271,9 +271,11 @@ def batchBangun(user: List[Union[List[str], None]], banyakDataUser: int, bahan_b
         if user[i][2] == "pembangun":
             banyakJin += 1
     jin: List[Union[str, None]] = [None for _ in range(banyakJin)]
-    for i in range(banyakJin):
-        if user[i + 3][2] == "pembangun":
-            jin[i] = user[3 + i][0]
+    j: int = 0
+    for i in range(banyakDataUser):
+        if user[i][2] == "pembangun":
+            jin[j] = user[i][0]
+            j += 1
     candiBaru: List[Union[List[int], None]] = [None for _ in range(banyakJin)]
     if banyakJin != 0:
         jumlahPasir: int = 0
@@ -364,6 +366,7 @@ def laporanJin(user: List[Union[List[str], None]], banyakDataUser: int, banyakDa
                 break
         if ada == True:
             banyak[indeksUser] += 1
+    print(ada)
     if ada == True:
         maks: int = banyak[3]
         min: int = banyak[3]

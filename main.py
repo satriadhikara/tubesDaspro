@@ -7,7 +7,7 @@ import os
 import time
 import argparse
 import commands
-from typing import List, Tuple, Union
+from typing import List, Union
 
 # Fungsi - fungsi untuk data
 

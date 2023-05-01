@@ -6,7 +6,7 @@ from collections.abc import Generator
 # F-01
 
 
-def login(user: List[List[str]], banyakData: int) -> List[List[str]]:
+def login(user: List[List[str]], banyakData: int) -> List[Union[str, None]]:
     username: str = str(input("Username: "))
     password: str = str(input("Password: "))
 
@@ -26,7 +26,7 @@ def login(user: List[List[str]], banyakData: int) -> List[List[str]]:
 # F03
 
 
-def summonJin(user: List[List[str]], banyakData: int) -> List[List[str]]:
+def summonJin(user: List[Union[List[str], None]], banyakData: int) -> List[Union[List[str], None]]:
     # Input Jenis Jin
     print("Jenis jin yang dapat dipanggil:")
     print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
@@ -108,7 +108,7 @@ def summonJin(user: List[List[str]], banyakData: int) -> List[List[str]]:
 # Rekursif
 
 
-def hapusCandi(username: str, candi: List[Union[str, int]], banyakData: int) -> List[Union[str, int]]:
+def hapusCandi(username: str, candi: List[Union[List[Union[str, int]], None]], banyakData: int) -> List[Union[List[Union[str, int]], None]]:
     for i in range(banyakData):
         if candi[i][1] == username:
             if i == (banyakData - 1):
@@ -122,7 +122,7 @@ def hapusCandi(username: str, candi: List[Union[str, int]], banyakData: int) -> 
         return candi
 
 
-def hapusJin(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[str, int]]], banyakDataCandi: int) -> Tuple[List[List[str]], List[List[Union[str, int]]]]:
+def hapusJin(user: List[Union[List[str], None]], banyakDataUser: int, candi: List[Union[List[Union[str, int]], None]], banyakDataCandi: int) -> Tuple[List[Union[List[str], None]], List[Union[List[Union[str, int]], None]]]:
     username: str = input("Masukan username jin : ")
     while True:
         validasi: str = input(
@@ -149,7 +149,7 @@ def hapusJin(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[
 # F05
 
 
-def ubahJin(user: List[str], banyakData: int) -> List[str]:
+def ubahJin(user: List[Union[List[str], None]], banyakData: int) -> List[Union[List[str], None]]:
     username: str = input("Masukan username jin : ")
     print()
     for i in range(banyakData):
@@ -183,7 +183,7 @@ def ubahJin(user: List[str], banyakData: int) -> List[str]:
 # F-06
 
 
-def bangun(candi: List[Union[str, int]], bahan_bangunan: List[Union[str, int]], banyakDataCandi: int, username: str) -> Tuple[List[Union[str, int]], List[Union[str, int]]]:
+def bangun(candi: List[Union[List[Union[str, int]], None]], bahan_bangunan: List[Union[List[Union[str, int]], None]], banyakDataCandi: int, username: str) -> Tuple[List[Union[List[Union[str, int]], None]], List[Union[List[Union[str, int]], None]]]:
     cukup: int = 0
     pasir: int = randNumber(1, 5)
     batu: int = randNumber(1, 5)
@@ -199,7 +199,7 @@ def bangun(candi: List[Union[str, int]], bahan_bangunan: List[Union[str, int]], 
     if bahan_bangunan[3][2] >= air:
         cukup += 1
     if cukup == 3:
-        jumlah = 100 - (banyakDataCandi - 1)
+        jumlah: int = 100 - (banyakDataCandi - 1)
         if jumlah != 0:
             jumlah -= 1
             candi[banyakDataCandi] = [maks + 1, username, pasir, batu, air]
@@ -217,7 +217,7 @@ def bangun(candi: List[Union[str, int]], bahan_bangunan: List[Union[str, int]], 
 # F-07
 
 
-def kumpul(bahan_bangunan: List[List[Union[int, str]]]):
+def kumpul(bahan_bangunan: List[Union[List[Union[str, int]], None]]) -> List[Union[List[Union[str, int]], None]]:
     pasir: int = randNumber(0, 5)
     batu: int = randNumber(0, 5)
     air: int = randNumber(0, 5)
@@ -231,7 +231,7 @@ def kumpul(bahan_bangunan: List[List[Union[int, str]]]):
 
 
 # batch kumpul
-def batchKumpul(user: List[List[str]], banyakData: int, bahan_bangunan: List[List[Union[int, str]]]) -> List[List[Union[int, str]]]:
+def batchKumpul(user: List[Union[List[str], None]], banyakData: int, bahan_bangunan: List[Union[List[Union[str, int]], None]]) -> List[Union[List[Union[str, int]], None]]:
     banyakJin: int = 0
     for i in range(banyakData):
         if user[i][2] == "pengumpul":
@@ -243,9 +243,9 @@ def batchKumpul(user: List[List[str]], banyakData: int, bahan_bangunan: List[Lis
         jumlahAir: int = 0
         j: int = 0
         while j <= banyakJin:
-            pasir = randNumber(0, 5)
-            batu = randNumber(0, 5)
-            air = randNumber(0, 5)
+            pasir: int = randNumber(0, 5)
+            batu: int = randNumber(0, 5)
+            air: int = randNumber(0, 5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
@@ -265,24 +265,24 @@ def batchKumpul(user: List[List[str]], banyakData: int, bahan_bangunan: List[Lis
 # batch bangun
 
 
-def batchBangun(user: List[List[str]], banyakDataUser: int, bahan_bangunan: List[List[Union[str, int]]], candi: List[List[Union[str, int]]], banyakDataCandi: int) -> Tuple[List[Union[str, int]], List[Union[str, int]]]:
+def batchBangun(user: List[Union[List[str], None]], banyakDataUser: int, bahan_bangunan: List[Union[List[Union[str, int]], None]], candi: List[Union[List[Union[str, int]], None]], banyakDataCandi: int) -> Tuple[List[Union[List[Union[str, int]], None]], List[Union[List[Union[str, int]], None]]]:
     banyakJin: int = 0
     for i in range(banyakDataUser):
         if user[i][2] == "pembangun":
             banyakJin += 1
-    jin = [None for _ in range(banyakJin)]
+    jin: List[Union[str, None]] = [None for _ in range(banyakJin)]
     for i in range(banyakJin):
         if user[i + 3][2] == "pembangun":
             jin[i] = user[3 + i][0]
-    candiBaru: List[int] = [None for _ in range(banyakJin)]
+    candiBaru: List[Union[List[int], None]] = [None for _ in range(banyakJin)]
     if banyakJin != 0:
         jumlahPasir: int = 0
         jumlahBatu: int = 0
         jumlahAir: int = 0
         for i in range(banyakJin):
-            pasir = randNumber(1, 5)
-            batu = randNumber(1, 5)
-            air = randNumber(1, 5)
+            pasir: int = randNumber(1, 5)
+            batu: int = randNumber(1, 5)
+            air: int = randNumber(1, 5)
             jumlahPasir += pasir
             jumlahBatu += batu
             jumlahAir += air
@@ -314,9 +314,9 @@ def batchBangun(user: List[List[str]], banyakDataUser: int, bahan_bangunan: List
         else:
             print(
                 f"Mengerahkan {banyakJin} jin untuk membangun candi dengan total bahan {jumlahPasir} pasir, {jumlahBatu} batu, dan {jumlahAir} air.")
-            kurangPasir = jumlahPasir - bahan_bangunan[1][2]
-            kurangBatu = jumlahBatu - bahan_bangunan[2][2]
-            kurangAir = jumlahAir - bahan_bangunan[3][2]
+            kurangPasir: int = jumlahPasir - bahan_bangunan[1][2]
+            kurangBatu: int = jumlahBatu - bahan_bangunan[2][2]
+            kurangAir: int = jumlahAir - bahan_bangunan[3][2]
             if kurangPasir <= 0 and kurangBatu <= 0:
                 print(f"Bangun gagal. Kurang {kurangAir} air.")
             elif kurangPasir <= 0 and kurangAir <= 0:
@@ -343,7 +343,7 @@ def batchBangun(user: List[List[str]], banyakDataUser: int, bahan_bangunan: List
 # F-09
 
 
-def laporanJin(user: List[List[str]], banyakDataUser: int, banyakDataCandi: int, candi: List[List[Union[int, str]]], bahan_bangunan: List[List[Union[int, str]]]):
+def laporanJin(user: List[Union[List[str], None]], banyakDataUser: int, banyakDataCandi: int, candi: List[Union[List[Union[str, int]], None]], bahan_bangunan: List[Union[List[Union[str, int]], None]]):
     total: int = 0
     totalPengumpul: int = 0
     totalPembangun: int = 0
@@ -360,13 +360,15 @@ def laporanJin(user: List[List[str]], banyakDataUser: int, banyakDataCandi: int,
         for j in range(banyakDataUser):
             if candi[i][1] == user[j][0]:
                 indeksUser: int = j
-                ada: bool = True
+                ada = True
                 break
         if ada == True:
             banyak[indeksUser] += 1
     if ada == True:
-        maks = min = banyak[3]
-        maksJin = minJin = user[3][0]
+        maks: int = banyak[3]
+        min: int = banyak[3]
+        maksJin: str = user[3][0]
+        minJin: str = user[3][0]
         for i in range(3, banyakDataUser):
             if banyak[i] == maks:
                 if maksJin > user[i][0]:
@@ -403,7 +405,7 @@ def hargaCandi(candiRow: List[Union[str, int]]) -> int:
     return ((candiRow[2] * 10000) + (candiRow[3] * 15000) + (candiRow[4] * 7500))
 
 
-def laporanCandi(candi: List[List[Union[int, str]]], banyakData: int):
+def laporanCandi(candi: List[Union[List[Union[str, int]], None]], banyakData: int):
     print()
     totalPasir: int = 0
     totalBatu: int = 0
@@ -444,7 +446,7 @@ def laporanCandi(candi: List[List[Union[int, str]]], banyakData: int):
 # F-11
 
 
-def hancurkanCandi(candi: List[List[Union[str, int]]], banyakData: int) -> List[List[Union[str, int]]]:
+def hancurkanCandi(candi: List[Union[List[Union[str, int]], None]], banyakData: int) -> List[Union[List[Union[str, int]], None]]:
     idCandi: int = int(input("Masukkan ID candi: "))
     for i in range(1, banyakData):
         if candi[i][0] == idCandi:
@@ -656,17 +658,17 @@ generator: Generator[float, None, None] = lcg()
 # B-05
 
 
-def gantiPassword(user: List[List[str]], banyakData: int) -> List[List[str]]:
+def gantiPassword(user: List[Union[List[str], None]], banyakData: int) -> List[Union[List[str], None]]:
     username: str = input("Username: ")
     password: str = input("Password: ")
 
     for i in range(banyakData):
         if username == user[i][0]:
             if password == user[i][1]:
-                validasi = input(
+                validasi: str = input(
                     "Apakah anda ingin mengganti password ? (Y/N): ")
                 if validasi == "Y":
-                    newPass = input("Masukan password baru: ")
+                    newPass: str = input("Masukan password baru: ")
                     user[i][1] = newPass
                     user[i][0] = user[i][0]
                     print(f"Password berhasil diubah")

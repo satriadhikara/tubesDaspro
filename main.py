@@ -7,24 +7,25 @@ import os
 import time
 import argparse
 import commands
+from typing import List, Tuple, Union
 
 # Fungsi - fungsi untuk data
 
 # Masukin data csv ke matriks
 
 
-def getData(matriks, fileName, path):
+def getData(matriks: List[None], fileName: str, path: str) -> List[Union[List[Union[int, str]], None]]:
     with open(f"{path}/{fileName}.csv", "r") as file:
-        contents = file.read()
+        contents: str = file.read()
     # Tipe data "contents" itu string jadi boleh pake len
     contents += "\n"
-    total = 0
+    total: int = 0
     for i in range(len(contents)):
         if contents[i] == '\n':
             total += 1
-    kata = ""
-    j = 0
-    temp = [None for _ in range(total)]
+    kata: str = ""
+    j: int = 0
+    temp: List[Union[None, str]] = [None for _ in range(total)]
     for i in range(len(contents)):
         if contents[i] == '\n':
             temp[j] = kata
@@ -35,20 +36,22 @@ def getData(matriks, fileName, path):
     for i in range(total):
         if temp[i] != '':
             matriks[i] = splits(temp[i], fileName)
+    return matriks
 
 # Fungsi split (cuman buat data)
 
 
-def splits(baris, fileName):
+def splits(baris: str, fileName: str) -> List[str]:
+    panjang: int
     baris += ";"
-    j = 0
+    j: int = 0
     kata = ""
     if fileName == "candi":
         panjang = 5
     else:
         panjang = 3
-    barisBaru = [None for _ in range(panjang)]
-    i = 0
+    barisBaru: List[Union[str, None]] = [None for _ in range(panjang)]
+    i: int = 0
     while True:
         if j == panjang:
             break
@@ -67,8 +70,8 @@ def splits(baris, fileName):
 # Kalau print(user) [['Bondowoso', 'cintaroro', 'bandung_bondowoso'], ['Roro', 'gasukabondo', 'roro_jonggrang'], None, None, None, None,
 
 
-def aksesData(matriks):
-    matriksBaru = [None for _ in range(banyakData(matriks))]
+def aksesData(matriks: List[Union[List[Union[int, str]], None]]) -> List[List[Union[int, str]]]:
+    matriksBaru: List[Union[List[Union[int, str]], None]] = [None for _ in range(banyakData(matriks))]
     for i in range(banyakData(matriks)):
         matriksBaru[i] = matriks[i]
     return matriksBaru
@@ -76,8 +79,8 @@ def aksesData(matriks):
 # Fungsi banyaknya data matriks
 
 
-def banyakData(matriks):
-    i = 0
+def banyakData(matriks: List[Union[List[Union[int, str]], None]]) -> int:
+    i: int = 0
     while matriks[i] != None:
         i += 1
     return i
@@ -93,10 +96,10 @@ def main():
     else:
         if os.path.exists(f"save/{args.folder}"):
             # Matriks database
-            user = [None for _ in range(105)]
-            candi = [None for _ in range(105)]
-            bahan_bangunan = [None for _ in range(5)]
-            path = f"save/{args.folder}"
+            user: List[Union[List[str], None]] = [None for _ in range(105)]
+            candi: List[Union[List[Union[int, str]], None]] = [None for _ in range(105)]
+            bahan_bangunan: List[Union[List[Union[int, str]], None]] = [None for _ in range(5)]
+            path: str = f"save/{args.folder}"
             print()
             print("Loading...")
             time.sleep(0.5)
@@ -115,11 +118,11 @@ def main():
                 candi[i][3] = int(candi[i][3])
                 candi[i][4] = int(candi[i][4])
             # List sesi ini kosong ketika belom login, dan berisi [username, role] jika sudah login
-            sesi = []
+            sesi: List[str] = []
             # Loopingan utama program
             while True:
                 # Masukan input commands2
-                masukan = input(">>> ")
+                masukan: str = input(">>> ")
                 # F-01
                 if masukan == "login":
                     if sesi == []:
@@ -259,7 +262,14 @@ def main():
                 # F-12
                 elif masukan == "ayamberkokok":
                     # Procedure ayamBerkokok ini memperlihatkan akhirnya atau selesainya game ini
-                    commands.ayamBerkokok(banyakData(candi) - 1)
+                    if sesi == []:
+                        print(
+                            "Anda belum login, silahkan login terlebih dahulu sebelum melakukan ayamberkokok")
+                    elif sesi[1] == "roro_jonggrang":
+                        commands.ayamBerkokok(banyakData(candi) - 1)
+                    else:
+                        print(
+                            "Ayam berkokok hanya dapat diakses oleh akun Roro Jonggrang")
                 # F-14
                 elif masukan == "save":
                     # Procedure save ini menyimpan semua matriks menjadi csv di dalam folder yang diinginkan

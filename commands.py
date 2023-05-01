@@ -1,12 +1,14 @@
 # Commands
 import os
+from typing import List, Tuple, Union
+from collections.abc import Generator
 
 # F-01
 
 
-def login(user, banyakData):
-    username = str(input("Username: "))
-    password = str(input("Password: "))
+def login(user: List[List[str]], banyakData: int) -> List[List[str]]:
+    username: str = str(input("Username: "))
+    password: str  = str(input("Password: "))
 
     for i in range(banyakData):
         if username == user[i][0]:
@@ -24,19 +26,19 @@ def login(user, banyakData):
 # F03
 
 
-def summonJin(user, banyakData):
+def summonJin(user: List[List[str]], banyakData: int) -> List[List[str]]:
     # Input Jenis Jin
     print("Jenis jin yang dapat dipanggil:")
     print(" (1) Pengumpul - Bertugas mengumpulkan bahan bangunan")
     print(" (2) Pembangun - bertugas membangun candi")
     print()
-    jj = input("Masukan nomor jenis jin yang dipanggil: ")
+    jj: str = input("Masukan nomor jenis jin yang dipanggil: ")
 
     if jj == '1':
         print('Memilih jin "Pengumpul".')
         # Input username jin pengumpul dan password
-        username = input("Masukan username jin: ")
-        cek = False
+        username: str = input("Masukan username jin: ")
+        cek: bool = False
         for i in range(banyakData):
             if user[i][0] != username:
                 cek = True
@@ -88,7 +90,7 @@ def summonJin(user, banyakData):
                         print("Menyerahkan sesajen...")
                         print("Membacakan mantra...")
                         print()
-                        print("Jin", username, "berhasil dipanggil!")
+                        print(f"Jin {username} berhasil dipanggil!")
                         return user
             else:
                 print("Password panjangnya harus 5-25 karakter!")
@@ -101,10 +103,10 @@ def summonJin(user, banyakData):
         print(f"Tidak ada jenis jin bernomor \"{jj}\"")
         return user
 
-# F04
+# F04 
 
-
-def hapusCandi(username, candi, banyakData):
+# Rekursif
+def hapusCandi(username: str, candi: List[Union[str,int]], banyakData: int) -> List[Union[str,int]]:
     for i in range(banyakData):
         if candi[i][1] == username:
             if i == (banyakData - 1):
@@ -118,10 +120,10 @@ def hapusCandi(username, candi, banyakData):
         return candi
 
 
-def hapusJin(user, banyakDataUser, candi, banyakDataCandi):
-    username = input("Masukan username jin : ")
+def hapusJin(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[str,int]]], banyakDataCandi: int) -> Tuple[List[List[str]], List[List[Union[str,int]]]]:
+    username: str = input("Masukan username jin : ")
     while True:
-        validasi = input(
+        validasi: str = input(
             f"Apakah anda yakin ingin menghapus jin dengan username {username}, (Y/N)? ")
         if validasi == 'Y' or validasi == 'y':
             for i in range(banyakDataUser):
@@ -145,8 +147,8 @@ def hapusJin(user, banyakDataUser, candi, banyakDataCandi):
 # F05
 
 
-def ubahJin(user, banyakData):
-    username = input("Masukan username jin : ")
+def ubahJin(user: List[str], banyakData: int) -> List[str]:
+    username: str = input("Masukan username jin : ")
     print()
     for i in range(banyakData):
         if user[i][0] == username:
@@ -179,12 +181,12 @@ def ubahJin(user, banyakData):
 # F-06
 
 
-def bangun(candi, bahan_bangunan, banyakDataCandi, username):
-    cukup = 0
-    pasir = randNumber(1, 5)
-    batu = randNumber(1, 5)
-    air = randNumber(1, 5)
-    maks = 0
+def bangun(candi: List[Union[str,int]], bahan_bangunan: List[Union[str,int]], banyakDataCandi: int, username: str) -> Tuple[List[Union[str,int]], List[Union[str,int]]]:
+    cukup: int = 0
+    pasir: int = randNumber(1, 5)
+    batu: int = randNumber(1, 5)
+    air: int = randNumber(1, 5)
+    maks: int = 0
     for i in range(1, banyakDataCandi):
         if maks < int(candi[i][0]):
             maks = int(candi[i][0])
@@ -213,10 +215,10 @@ def bangun(candi, bahan_bangunan, banyakDataCandi, username):
 # F-07
 
 
-def kumpul(bahan_bangunan):
-    pasir = randNumber(0, 5)
-    batu = randNumber(0, 5)
-    air = randNumber(0, 5)
+def kumpul(bahan_bangunan: List[List[Union[int, str]]]):
+    pasir: int = randNumber(0, 5)
+    batu: int = randNumber(0, 5)
+    air: int = randNumber(0, 5)
     bahan_bangunan[1][2] += pasir
     bahan_bangunan[2][2] += batu
     bahan_bangunan[3][2] += air
@@ -227,17 +229,17 @@ def kumpul(bahan_bangunan):
 
 
 # batch kumpul
-def batchKumpul(user, banyakData, bahan_bangunan):
-    banyakJin = 0
+def batchKumpul(user: List[List[str]], banyakData: int, bahan_bangunan: List[List[Union[int, str]]]) -> List[List[Union[int, str]]]:
+    banyakJin: int = 0
     for i in range(banyakData):
         if user[i][2] == "pengumpul":
             banyakJin += 1
 
     if banyakJin != 0:
-        jumlahPasir = 0
-        jumlahBatu = 0
-        jumlahAir = 0
-        j = 0
+        jumlahPasir: int = 0
+        jumlahBatu: int = 0
+        jumlahAir: int = 0
+        j: int = 0
         while j <= banyakJin:
             pasir = randNumber(0, 5)
             batu = randNumber(0, 5)
@@ -261,8 +263,8 @@ def batchKumpul(user, banyakData, bahan_bangunan):
 # batch bangun
 
 
-def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
-    banyakJin = 0
+def batchBangun(user: List[List[str]], banyakDataUser: int, bahan_bangunan: List[List[Union[str, int]]], candi: List[List[Union[str, int]]], banyakDataCandi: int) -> Tuple[List[Union[str, int]], List[Union[str, int]]]:
+    banyakJin: int = 0
     for i in range(banyakDataUser):
         if user[i][2] == "pembangun":
             banyakJin += 1
@@ -271,11 +273,11 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
     for i in range(banyakJin):
         if user[i + 3][2] == "pembangun":
             jin[i] = user[3 + i][0]
-    candiBaru = [None for _ in range(banyakJin)]
+    candiBaru: List[int]  = [None for _ in range(banyakJin)]
     if banyakJin != 0:
-        jumlahPasir = 0
-        jumlahBatu = 0
-        jumlahAir = 0
+        jumlahPasir: int = 0
+        jumlahBatu: int = 0
+        jumlahAir: int = 0
         for i in range(banyakJin):
             pasir = randNumber(1, 5)
             batu = randNumber(1, 5)
@@ -284,7 +286,7 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
             jumlahBatu += batu
             jumlahAir += air
             candiBaru[i] = [pasir, batu, air]
-        cukup = 0
+        cukup: int = 0
         if bahan_bangunan[1][2] >= jumlahPasir:
             cukup += 1
         if bahan_bangunan[2][2] >= jumlahBatu:
@@ -340,10 +342,10 @@ def batchBangun(user, banyakDataUser, bahan_bangunan, candi, banyakDataCandi):
 # F-09
 
 
-def laporanJin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
-    total = 0
-    totalPengumpul = 0
-    totalPembangun = 0
+def laporanJin(user: List[List[str]], banyakDataUser: int, banyakDataCandi: int, candi: List[List[Union[int, str]]], bahan_bangunan: List[List[Union[int, str]]]):
+    total: int = 0
+    totalPengumpul: int = 0
+    totalPembangun: int = 0
     for i in range(banyakDataUser):
         if user[i][2] == "pengumpul":
             totalPengumpul += 1
@@ -351,12 +353,12 @@ def laporanJin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
             totalPembangun += 1
     total = totalPembangun + totalPengumpul
 
-    ada = False
-    banyak = [0 for _ in range(banyakDataUser)]
+    ada: bool = False
+    banyak: List[int] = [0 for _ in range(banyakDataUser)]
     for i in range(1, banyakDataCandi):
         for j in range(banyakDataUser):
             if candi[i][1] == user[j][0]:
-                indeksUser = j
+                indeksUser: int = j
                 break
         banyak[indeksUser] += 1
         ada = True
@@ -395,20 +397,20 @@ def laporanJin(user, banyakDataUser, banyakDataCandi, candi, bahan_bangunan):
 # F-10
 
 
-def hargaCandi(candiRow):
+def hargaCandi(candiRow: List[Union[str, int]]) -> int:
     return ((candiRow[2] * 10000) + (candiRow[3] * 15000) + (candiRow[4] * 7500))
 
 
-def laporanCandi(candi, banyakData):
+def laporanCandi(candi: List[List[Union[int, str]]], banyakData: int):
     print()
-    totalPasir = 0
-    totalBatu = 0
-    totalAir = 0
+    totalPasir: int = 0
+    totalBatu: int = 0
+    totalAir: int = 0
     if banyakData > 1:
-        maks = hargaCandi(candi[1])
-        min = hargaCandi(candi[1])
-        idMaks = 1
-        idMin = 1
+        maks: int = hargaCandi(candi[1])
+        min: int = hargaCandi(candi[1])
+        idMaks: int = 1
+        idMin: int = 1
         for i in range(1, banyakData):
             totalPasir += int(candi[i][2])
             totalBatu += int(candi[i][3])
@@ -440,8 +442,8 @@ def laporanCandi(candi, banyakData):
 # F-11
 
 
-def hancurkanCandi(candi, banyakData):
-    idCandi = int(input("Masukkan ID candi: "))
+def hancurkanCandi(candi: List[List[Union[str, int]]], banyakData: int) -> List[List[str]]:
+    idCandi: int = int(input("Masukkan ID candi: "))
     for i in range(banyakData):
         if int(candi[i][0]) == idCandi:
             if i == (banyakData - 1):
@@ -458,7 +460,7 @@ def hancurkanCandi(candi, banyakData):
 # F12 - Ayam Berkokok
 
 
-def ayamBerkokok(totalcandi):
+def ayamBerkokok(totalcandi: int):
     print()
     print("Kukuruyuk.. Kukuruyuk..")
     print()
@@ -478,19 +480,19 @@ Yah, Bandung Bondowoso memenangkan permainan!""")
 # F-14
 
 
-def save(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDataBahan):
-    folder = "save/"
-    temp = input("Masukkan nama folder: ")
+def save(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[str, int]]], banyakDataCandi: int, bahan_bangunan: List[List[Union[int, str]]], banyakDataBahan: int):
+    folder: str = "save/"
+    temp: str = input("Masukkan nama folder: ")
     folder += temp
     print("\nSaving...\n")
     folder += "/"
-    jumlah = 0
+    jumlah: int = 0
     for i in range(len(folder)):
         if folder[i] == "/":
             jumlah += 1
-    i = 0
-    batas = 0
-    path = ""
+    i: int = 0
+    batas: int = 0
+    path: str = ""
     while batas != jumlah:
         if folder[i] != "/":
             path += folder[i]
@@ -533,7 +535,7 @@ def save(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDat
 # F15 - Help
 
 
-def bantuan(akun):
+def bantuan(akun: str):
     if akun == "bandung_bondowoso":
         print(f"""
 =========== HELP ===========
@@ -601,17 +603,15 @@ def bantuan(akun):
 =========== HELP ===========
 1. login
    Untuk masuk menggunakan akun
-2. save
-   Untuk menyimpan data permainan
-3. exit
+2. exit
    Untuk keluar dari program dan kembali ke terminal""")
 
 # F-16
 
 
-def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, banyakDataBahan):
+def exitProgram(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[str, int]]], banyakDataCandi: int, bahan_bangunan: List[List[Union[str, int]]], banyakDataBahan: int):
     while True:
-        prompt = input(
+        prompt: str = input(
             "Apakah Anda mau melakukan penyimpanan file yang sudah diubah? (y/n) ")
         if prompt == 'y' or prompt == 'Y':
             save(user, banyakDataUser, candi, banyakDataCandi,
@@ -624,7 +624,7 @@ def exitProgram(user, banyakDataUser, candi, banyakDataCandi, bahan_bangunan, ba
 # B-01
 
 
-def lcg(seed: int = 177013, a: int = 1103515245, c: int = 12345, m: int = 2**31):
+def lcg(seed: int = 177013, a: int = 1103515245, c: int = 12345, m: int = 2**31) -> Generator[float, None, None]:
     # Kalo 'seed' terserah (JoJo ending true ending) 'a', 'c', 'm' tersebut banyak digunakan karena panjang setiap periode dari loop yang sangat panjang
     while True:
         seed = (a * seed + c) % m
@@ -632,8 +632,8 @@ def lcg(seed: int = 177013, a: int = 1103515245, c: int = 12345, m: int = 2**31)
 # Membuat generator yang memuat nilai 0 sampai 1 dalam float sehingga menggunakan 'yield'
 
 
-def rounding(x: float):
-    # Karena generator float dan jika diubah menjadi integer terjadi floor division
+def rounding(x: float) -> int:
+    # Karena generator float dan jika diubah menjadi integer terjadi floor
     # Fungsinya agar nanti bilangan float dibulatkan ke bilangan bulat terdekat
     temp = int(x)
     if x % 1 < 0.5:
@@ -642,20 +642,20 @@ def rounding(x: float):
         return temp + 1
 
 
-def randNumber(minimum: int, maximum: int):
+def randNumber(minimum: int, maximum: int) -> int:
     # randint dengan nilai minimum dan maximum
     return rounding(next(generator) * (maximum - minimum) + minimum)
 
 
-generator = lcg()
+generator: Generator[float, None, None] = lcg()
 
 
 # B-05
 
 
-def gantiPassword(user, banyakData):
-    username = input("Username: ")
-    password = input("Password: ")
+def gantiPassword(user: List[List[str]], banyakData: int) -> List[List[str]]:
+    username: str = input("Username: ")
+    password: str = input("Password: ")
 
     for i in range(banyakData):
         if username == user[i][0]:

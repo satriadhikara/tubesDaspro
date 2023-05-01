@@ -71,7 +71,8 @@ def splits(baris: str, fileName: str) -> List[str]:
 
 
 def aksesData(matriks: List[Union[List[Union[int, str]], None]]) -> List[List[Union[int, str]]]:
-    matriksBaru: List[Union[List[Union[int, str]], None]] = [None for _ in range(banyakData(matriks))]
+    matriksBaru: List[Union[List[Union[int, str]], None]] = [
+        None for _ in range(banyakData(matriks))]
     for i in range(banyakData(matriks)):
         matriksBaru[i] = matriks[i]
     return matriksBaru
@@ -97,8 +98,10 @@ def main():
         if os.path.exists(f"save/{args.folder}"):
             # Matriks database
             user: List[Union[List[str], None]] = [None for _ in range(105)]
-            candi: List[Union[List[Union[int, str]], None]] = [None for _ in range(105)]
-            bahan_bangunan: List[Union[List[Union[int, str]], None]] = [None for _ in range(5)]
+            candi: List[Union[List[Union[int, str]], None]] = [
+                None for _ in range(105)]
+            bahan_bangunan: List[Union[List[Union[int, str]], None]] = [
+                None for _ in range(5)]
             path: str = f"save/{args.folder}"
             print()
             print("Loading...")
@@ -292,8 +295,8 @@ def main():
                     # Fungsi gantiPassword ini mengupdate matriks user sehingga password username bisa diganti
                     user = commands.gantiPassword(user, banyakData(user))
                 else:
-                    print("""Command tidak ditemukan
-        Masukkan command \"help\" untuk daftar command yang dapat kamu panggil.""")
+                    print(
+                        "Command tidak ditemukan\nMasukkan command \"help\" untuk daftar command yang dapat kamu panggil.")
                     continue
         else:
             print()

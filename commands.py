@@ -8,7 +8,7 @@ from collections.abc import Generator
 
 def login(user: List[List[str]], banyakData: int) -> List[List[str]]:
     username: str = str(input("Username: "))
-    password: str  = str(input("Password: "))
+    password: str = str(input("Password: "))
 
     for i in range(banyakData):
         if username == user[i][0]:
@@ -103,10 +103,12 @@ def summonJin(user: List[List[str]], banyakData: int) -> List[List[str]]:
         print(f"Tidak ada jenis jin bernomor \"{jj}\"")
         return user
 
-# F04 
+# F04
 
 # Rekursif
-def hapusCandi(username: str, candi: List[Union[str,int]], banyakData: int) -> List[Union[str,int]]:
+
+
+def hapusCandi(username: str, candi: List[Union[str, int]], banyakData: int) -> List[Union[str, int]]:
     for i in range(banyakData):
         if candi[i][1] == username:
             if i == (banyakData - 1):
@@ -120,7 +122,7 @@ def hapusCandi(username: str, candi: List[Union[str,int]], banyakData: int) -> L
         return candi
 
 
-def hapusJin(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[str,int]]], banyakDataCandi: int) -> Tuple[List[List[str]], List[List[Union[str,int]]]]:
+def hapusJin(user: List[List[str]], banyakDataUser: int, candi: List[List[Union[str, int]]], banyakDataCandi: int) -> Tuple[List[List[str]], List[List[Union[str, int]]]]:
     username: str = input("Masukan username jin : ")
     while True:
         validasi: str = input(
@@ -181,7 +183,7 @@ def ubahJin(user: List[str], banyakData: int) -> List[str]:
 # F-06
 
 
-def bangun(candi: List[Union[str,int]], bahan_bangunan: List[Union[str,int]], banyakDataCandi: int, username: str) -> Tuple[List[Union[str,int]], List[Union[str,int]]]:
+def bangun(candi: List[Union[str, int]], bahan_bangunan: List[Union[str, int]], banyakDataCandi: int, username: str) -> Tuple[List[Union[str, int]], List[Union[str, int]]]:
     cukup: int = 0
     pasir: int = randNumber(1, 5)
     batu: int = randNumber(1, 5)
@@ -268,12 +270,11 @@ def batchBangun(user: List[List[str]], banyakDataUser: int, bahan_bangunan: List
     for i in range(banyakDataUser):
         if user[i][2] == "pembangun":
             banyakJin += 1
-    print(banyakJin)
     jin = [None for _ in range(banyakJin)]
     for i in range(banyakJin):
         if user[i + 3][2] == "pembangun":
             jin[i] = user[3 + i][0]
-    candiBaru: List[int]  = [None for _ in range(banyakJin)]
+    candiBaru: List[int] = [None for _ in range(banyakJin)]
     if banyakJin != 0:
         jumlahPasir: int = 0
         jumlahBatu: int = 0
@@ -359,9 +360,10 @@ def laporanJin(user: List[List[str]], banyakDataUser: int, banyakDataCandi: int,
         for j in range(banyakDataUser):
             if candi[i][1] == user[j][0]:
                 indeksUser: int = j
+                ada: bool = True
                 break
-        banyak[indeksUser] += 1
-        ada = True
+        if ada == True:
+            banyak[indeksUser] += 1
     if ada == True:
         maks = min = banyak[3]
         maksJin = minJin = user[3][0]
@@ -442,20 +444,21 @@ def laporanCandi(candi: List[List[Union[int, str]]], banyakData: int):
 # F-11
 
 
-def hancurkanCandi(candi: List[List[Union[str, int]]], banyakData: int) -> List[List[str]]:
+def hancurkanCandi(candi: List[List[Union[str, int]]], banyakData: int) -> List[List[Union[str, int]]]:
     idCandi: int = int(input("Masukkan ID candi: "))
-    for i in range(banyakData):
-        if int(candi[i][0]) == idCandi:
+    for i in range(1, banyakData):
+        if candi[i][0] == idCandi:
             if i == (banyakData - 1):
                 candi[i] = None
             elif i != (banyakData - 1):
                 for j in range(i, banyakData - 1):
                     candi[j] = candi[j + 1]
                 candi[banyakData - 1] = None
+            print("\nCandi telah berhasil dihancurkan")
+            return candi
     else:
-        print("Tidak ada candi dengan ID tersebut")
-    return candi
-
+        print("\nTidak ada candi dengan ID tersebut")
+        return candi
 
 # F12 - Ayam Berkokok
 
